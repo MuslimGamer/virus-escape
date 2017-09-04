@@ -1,7 +1,10 @@
 externs = {
     "level": {
         // size in tiles
-        "widthInTiles": 20,
-        "heightInTiles": 20
-    }
+        "widthInTiles": 8,
+        "heightInTiles": 8
+    },
+
+    "tileSize": 64, // tiles are 32x32px
+    "padding": 8
 }
