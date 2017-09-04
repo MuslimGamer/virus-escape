@@ -15,7 +15,7 @@ Game = {
         map.init(config("level").widthInTiles, config("level").heightInTiles);
 
         Crafty.e("Level").loadMap(map);
-        Crafty.e("Player").move(16, 16);
+        Crafty.e("Player").place();
     }
 }
 
