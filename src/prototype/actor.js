@@ -12,7 +12,7 @@ Crafty.c('Actor', {
 
     this.bind('EnterFrame', function() {
       this.attr({ x: this.x + this.v.x, y: this.y + this.v.y });
-    })
+    });
   },
 
   // Execute a callback when collides with an entity with the tag in it. This

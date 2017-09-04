@@ -17,6 +17,6 @@ Game = {
         Crafty.e("Level").loadMap(map);
         Crafty.e("Player").place();
     }
-}
+};
 
 window.addEventListener('load', Game.start);
