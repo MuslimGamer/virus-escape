@@ -1,8 +1,9 @@
 // "Model" data: doesn't know anything about the view, CraftyJS, etc.
 map = {
-    init: function(levelNumber) {
-        this.widthInTiles = config("level").widthInTiles;
-        this.heightInTiles = config("level").heightInTiles;
+    init: function(widthInTiles, heightInTiles, levelNumber) {
+        this.widthInTiles = widthInTiles;
+        this.heightInTiles = heightInTiles;
+        this.levelNumber = levelNumber;
 
         // hash: key is coordinates (eg. "x, y" and value is tile data)
         this.data = {};
@@ -12,15 +13,15 @@ map = {
                 this.data[this.getKey(x, y)] = "Empty";
             }
         }
-
-        this.levelNumber = levelNumber;
     },
+    
+    getTile: function(x, y) {
+        return this.data[this.getKey(x, y)];
+    },
+
+    // Boundary: methods below are private (by convention only, not enforceable).
 
     getKey: function(x, y) {
         return x + ", " + y;
-    },
-
-    getTile: function(x, y) {
-        return this.data[this.getKey(x, y)];
     }
 }

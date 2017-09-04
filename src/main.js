@@ -12,7 +12,7 @@ Game = {
         Crafty.init(Game.view.width, Game.view.height);
         Crafty.background('black');
         
-        map.init();
+        map.init(config("level").widthInTiles, config("level").heightInTiles);
 
         Crafty.e("Level").loadMap(map);
         Crafty.e("Player").move(16, 16);
