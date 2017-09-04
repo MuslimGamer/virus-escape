@@ -11,6 +11,8 @@ Game = {
         // Game world is whatever fits on-screen
         Crafty.init(Game.view.width, Game.view.height);
         Crafty.background('black');
+        
+        Crafty.e("Level").create(Game.levelNumber);
 
         Crafty.e("Player");
     }
