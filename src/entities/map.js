@@ -1,3 +1,24 @@
+// tile data class constructor
+function tileData(x, y) {
+    this.tileData = {
+        x: x,
+        y: y,
+
+        walkable: true,
+        contents: '',
+
+        enter: function(thing) {
+            this.contents = thing;
+        },
+
+        leave: function() {
+            this.contents = '';
+        }
+    }
+    
+    return this;
+}
+
 // "Model" data: doesn't know anything about the view, CraftyJS, etc.
 map = {
     init: function(widthInTiles, heightInTiles, levelNumber) {
@@ -10,7 +31,7 @@ map = {
 
         for (var y = 0; y < this.heightInTiles; y++) {
             for (var x = 0; x < this.widthInTiles; x++) {
-                this.data[this.getKey(x, y)] = new tiledata(x, y);
+                this.data[this.getKey(x, y)] = new tileData(x, y);
             }
         }
     },
@@ -19,9 +40,12 @@ map = {
         return this.data[this.getKey(x, y)];
     },
 
-    // intended to be used after combining tile entity and tiledata class
-    setTile: function(x, y, newobj) {
-        this.data[this.getKey(x, y)] = newobj;
+    // intended to be used after combining tile entity and tileData class
+    setTile: function(x, y, TileView) {
+        // TileView is the actual Crafty entity; we're setting it here to
+        // make it accessible using map.getTile, after we've added the data class's properies.
+        // see level.js
+        this.data[this.getKey(x, y)] = TileView;
     },
 
     // Boundary: methods below are private (by convention only, not enforceable).

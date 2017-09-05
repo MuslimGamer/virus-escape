@@ -4,9 +4,9 @@ Crafty.c('Tile', {
         this.requires('Actor');
     },
 
-    Tile: function(tilebase) {
+    tile: function(tileData) {
         // maps the data class as a property
-        this.tiledata = tilebase.tiledata
+        this.tileData = tileData.tileData
         
         return this;
     }

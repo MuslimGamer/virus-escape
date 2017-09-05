@@ -17,10 +17,10 @@ Game = {
         Crafty.e("Level").loadMap(map);
         Crafty.e("Player").placeInRandomTile();
 
-        Crafty.e('Gate').placeInRandomTile();
+        Crafty.e('WinGate').placeInRandomTile();
 
         for (var i = 0; i < Game.levelNumber; i++) {
-            Crafty.e('AntiVirus').placeInRandomTile();
+            Crafty.e('DangerTile').placeInRandomTile();
         }
     },
 

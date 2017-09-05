@@ -1,8 +1,7 @@
 Crafty.c('Player', {
     init: function() {
-        // Tiled already requires Actor
-        this.requires("Tiled, Controllable")
-            .size(32, 32)
+        // TileEntity already requires Actor
+        this.requires("TileEntity, Controllable")
             .color('white')
             .bind('KeyDown', this.moving);
 
@@ -11,10 +10,10 @@ Crafty.c('Player', {
         this.nameInTile = 'Player';
     },
 
-    moved: function() {
-        if (this.tile.tiledata.contains('WinGate')) {
+    moved: function(newTile) {
+        if (newTile.tileData.contents == 'WinGate') {
             Game.completeLevel()
-        } else if (this.tile.tiledata.contains('AntiVirus')) {
+        } else if (newTile.tileData.contents == 'DangerTile') {
             Game.loseLevel()
         }
     },
@@ -40,8 +39,8 @@ Crafty.c('Player', {
         } else {
             return;
         }
-        var y = this.tile.tiledata.y;
-        var x = this.tile.tiledata.x;
+        var y = this.tile.tileData.y;
+        var x = this.tile.tileData.x;
 
         if (which == 'y') {
             y += movement;
@@ -49,15 +48,15 @@ Crafty.c('Player', {
             x += movement;
         }
 
-        var newtile = map.getTile(x, y);
+        var newTile = map.getTile(x, y);
         
-        if (newtile == null || newtile.walkable == false) {
+        if (newTile == null || newTile.walkable == false) {
             return;
         }
-        // handle removing player from tile's contains array
-        this.tile.tiledata.leave('Player')
-        
-        this.moveTo(newtile);
-        Crafty.trigger('PlayerMoved');
+        Crafty.trigger('PlayerMoved', newTile);
+
+        // handle removing player from tile's contents array
+        this.tile.tileData.leave();
+        this.moveTo(newTile);
     }
 });
