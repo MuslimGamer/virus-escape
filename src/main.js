@@ -31,7 +31,7 @@ Game = {
                               .addSwitchGate(switchGate);
         }
 
-        Crafty.e('Timer').startTimer();
+        Crafty.e('GameOverTimer').startTimer();
     },
 
     completeLevel: function() {

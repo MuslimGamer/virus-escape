@@ -1,5 +1,5 @@
-// Timer: the configurable time limit for completing the level.
-Crafty.c('Timer', {
+// GameOverTimer: the configurable time limit for completing the level.
+Crafty.c('GameOverTimer', {
     init: function() {
         this.requires('Common, Canvas, Text')
             .textColor('white')
@@ -16,7 +16,12 @@ Crafty.c('Timer', {
 
     startTimer: function() {
         this.timerSeconds = config('timerSeconds');
+        if (this.timerSeconds == 0) {
+            return this;
+        }
         this.text(this.timerSeconds.toString());
         this.repeatedly(this.timerTick, 1);
+
+        return this;
     }
 })
