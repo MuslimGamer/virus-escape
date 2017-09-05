@@ -6,13 +6,16 @@ function tileData(x, y) {
 
         walkable: true,
         contents: '',
+        entity: null,
 
         enter: function(thing) {
-            this.contents = thing;
+            this.contents = thing.nameInTile;
+            this.entity = thing;
         },
 
         leave: function() {
             this.contents = '';
+            this.entity = null;
         }
     }
     

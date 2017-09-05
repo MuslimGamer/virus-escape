@@ -11,7 +11,7 @@ Crafty.c('TileEntity', {
 
     moveTo: function(newTile) {
         this.tile = newTile;
-        newTile.tileData.enter(this.nameInTile)
+        newTile.tileData.enter(this)
 
         this.move(newTile.tileData.x * (config("tileSize") + config("padding")) + config("padding") * 2, 
                   newTile.tileData.y * (config("tileSize") + config("padding")) + config("padding") * 2);

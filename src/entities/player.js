@@ -11,10 +11,17 @@ Crafty.c('Player', {
     },
 
     moved: function(newTile) {
-        if (newTile.tileData.contents == 'WinGate') {
+        var tileType = newTile.tileData.contents;
+        var entity = newTile.tileData.entity;
+
+        if (tileType == 'WinGate') {
             Game.completeLevel()
-        } else if (newTile.tileData.contents == 'DangerTile') {
+        } else if (tileType == 'DangerTile' || 
+                   tileType == 'SwitchGate' && entity.isOn == true) {
             Game.loseLevel()
+        } else if (tileType == 'Switch' && entity.isOn == true) { 
+            // the entity is the switch tile and it's not activated yet.
+            entity.activate()
         }
     },
 
@@ -50,7 +57,7 @@ Crafty.c('Player', {
 
         var newTile = map.getTile(x, y);
         
-        if (newTile == null || newTile.walkable == false) {
+        if (newTile == null || newTile.tileData.walkable == false) {
             return;
         }
         Crafty.trigger('PlayerMoved', newTile);
