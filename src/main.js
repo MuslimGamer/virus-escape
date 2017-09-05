@@ -23,7 +23,7 @@ Game = {
             Crafty.e('DangerTile').placeInRandomTile();
         }
 
-        switchGateNo = Math.floor((Game.levelNumber/2) + 1)
+        var switchGateNo = Math.floor((Game.levelNumber/2) + 1)
 
         for (var i = 0; i < switchGateNo; i++) {
             var switchGate = Crafty.e('SwitchGate').placeInRandomTile();

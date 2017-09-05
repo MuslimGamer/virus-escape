@@ -15,7 +15,9 @@ Crafty.c('Level', {
         for (var y = 0; y < this.map.heightInTiles; y++) {
             for (var x = 0; x < this.map.widthInTiles; x++) {
                 // get the original tile data class
-                var tileData = this.map.getTile(x, y)
+                var tileData = this.map.getTile(x, y);
+
+                var tileSize = config('tileSize');
                 
                 // make a Crafty tile and add the data class properties to it using .tile
                 var mapTile = Crafty.e('Tile')
