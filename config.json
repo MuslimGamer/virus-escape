@@ -7,5 +7,5 @@ externs = {
 
     "tileSize": 64, // tiles are 32x32px
     "padding": 8,
-    "timerSeconds": 10
+    "timerSeconds": 5
 }
