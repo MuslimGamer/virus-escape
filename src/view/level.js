@@ -11,7 +11,6 @@ Crafty.c('Level', {
 
     loadMap: function(map) {
         this.map = map;
-        var tileSize = config("tileSize");
 
         for (var y = 0; y < this.map.heightInTiles; y++) {
             for (var x = 0; x < this.map.widthInTiles; x++) {
@@ -20,7 +19,6 @@ Crafty.c('Level', {
                 
                 // make a Crafty tile and add the data class properties to it using .tile
                 var mapTile = Crafty.e('Tile')
-                                    .size(tileSize, tileSize)
                                     .move(x * (tileSize + config("padding")), y * (tileSize + config("padding")))
                                     .color("blue");
 
