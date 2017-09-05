@@ -11,16 +11,21 @@ Crafty.c('Level', {
 
     loadMap: function(map) {
         this.map = map;
-        var tileSize = config("tileSize");
 
         for (var y = 0; y < this.map.heightInTiles; y++) {
             for (var x = 0; x < this.map.widthInTiles; x++) {
-                var mapTile = Crafty.e("Actor")
-                    .size(tileSize, tileSize)
-                    .move(x * (tileSize + config("padding")), y * (tileSize + config("padding")))
-                    .color("blue");
+                // get the original tile data class
+                var tileData = this.map.getTile(x, y);
+
+                var tileSize = config('tileSize');
                 
-                this.map.getTile(x, y).view = mapTile;
+                // make a Crafty tile and add the data class properties to it using .tile
+                var mapTile = Crafty.e('Tile')
+                                    .move(x * (tileSize + config("padding")), y * (tileSize + config("padding")))
+                                    .color("blue");
+
+                // map the Crafty tile to the map object, instead of the normal data class.
+                tileData.setView(mapTile);
             }
         }
     }
