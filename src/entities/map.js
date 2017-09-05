@@ -16,10 +16,14 @@ function tileData(x, y) {
         leave: function() {
             this.contents = '';
             this.entity = null;
+        },
+
+        setView: function(view) {
+            this.view = view
         }
     }
     
-    return this;
+    return this.tileData;
 }
 
 // "Model" data: doesn't know anything about the view, CraftyJS, etc.
@@ -41,14 +45,6 @@ map = {
     
     getTile: function(x, y) {
         return this.data[this.getKey(x, y)];
-    },
-
-    // intended to be used after combining tile entity and tileData class
-    setTile: function(x, y, TileView) {
-        // TileView is the actual Crafty entity; we're setting it here to
-        // make it accessible using map.getTile, after we've added the data class's properies.
-        // see level.js
-        this.data[this.getKey(x, y)] = TileView;
     },
 
     // Boundary: methods below are private (by convention only, not enforceable).

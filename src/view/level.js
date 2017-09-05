@@ -20,13 +20,12 @@ Crafty.c('Level', {
                 
                 // make a Crafty tile and add the data class properties to it using .tile
                 var mapTile = Crafty.e('Tile')
-                                    .tile(tileData)
                                     .size(tileSize, tileSize)
                                     .move(x * (tileSize + config("padding")), y * (tileSize + config("padding")))
                                     .color("blue");
 
                 // map the Crafty tile to the map object, instead of the normal data class.
-                this.map.setTile(x, y, mapTile);
+                tileData.setView(mapTile);
             }
         }
     }

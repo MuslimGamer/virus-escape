@@ -11,10 +11,10 @@ Crafty.c('TileEntity', {
 
     moveTo: function(newTile) {
         this.tile = newTile;
-        newTile.tileData.enter(this)
+        newTile.enter(this)
 
-        this.move(newTile.tileData.x * (config("tileSize") + config("padding")) + config("padding") * 2, 
-                  newTile.tileData.y * (config("tileSize") + config("padding")) + config("padding") * 2);
+        this.move(newTile.x * (config("tileSize") + config("padding")) + config("padding") * 2, 
+                  newTile.y * (config("tileSize") + config("padding")) + config("padding") * 2);
 
         return this;
     },
@@ -29,7 +29,7 @@ Crafty.c('TileEntity', {
             var tileY = Math.floor(Math.random() * config('level').heightInTiles);
             var newTile = map.getTile(tileX, tileY);
 
-            var condition = Boolean(newTile.tileData.contents)
+            var condition = Boolean(newTile.contents)
         }
 
         this.moveTo(newTile);

@@ -11,8 +11,8 @@ Crafty.c('Player', {
     },
 
     moved: function(newTile) {
-        var tileType = newTile.tileData.contents;
-        var entity = newTile.tileData.entity;
+        var tileType = newTile.contents;
+        var entity = newTile.entity;
 
         if (tileType == 'WinGate') {
             Game.completeLevel()
@@ -46,8 +46,8 @@ Crafty.c('Player', {
         } else {
             return;
         }
-        var y = this.tile.tileData.y;
-        var x = this.tile.tileData.x;
+        var y = this.tile.y;
+        var x = this.tile.x;
 
         if (which == 'y') {
             y += movement;
@@ -57,13 +57,13 @@ Crafty.c('Player', {
 
         var newTile = map.getTile(x, y);
         
-        if (newTile == null || newTile.tileData.walkable == false) {
+        if (newTile == null || newTile.walkable == false) {
             return;
         }
         Crafty.trigger('PlayerMoved', newTile);
 
         // handle removing player from tile's contents array
-        this.tile.tileData.leave();
+        this.tile.leave();
         this.moveTo(newTile);
     }
 });
