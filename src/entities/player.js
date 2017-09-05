@@ -28,19 +28,45 @@ Crafty.c('Player', {
     moving: function(e) {
         var k = e.key;
 
-        if (k == Crafty.keys.UP_ARROW || k == Crafty.keys.W) {
+        switch(k){
+            case Crafty.keys.UP_ARROW:
+            case Crafty.keys.W:
+                this.velocity(-1,-2);
+            break;
+
+            case Crafty.keys.DOWN_ARROW:
+            case Crafty.keys.S:
+                this.velocity(-1,2);
+            break;
+
+            case Crafty.keys.LEFT_ARROW:
+            case Crafty.keys.A:
+                this.velocity(-3,-0);
+            break;
+
+            case Crafty.keys.RIGHT_ARROW:
+            case Crafty.keys.D:
+                this.velocity(1,0);
+            break;
+
+            default:
+
+
+        }
+
+     /*  if (k == Crafty.keys.UP_ARROW || k == Crafty.keys.W) {
             var movement = -1;
             var which = 'y';
         }
-        else if (k == Crafty.keys.DOWN_ARROW || k == Crafty.keys.S) {
+        else if (k ==  || k == ) {
             var movement = 1;
             var which = 'y';
         }
-        else if (k == Crafty.keys.LEFT_ARROW || k == Crafty.keys.A) {
+        else if (k == Crafty.keys. || k == Crafty.keys.A) {
             var movement = -1;
             var which = 'x';
         }
-        else if (k == Crafty.keys.RIGHT_ARROW || k == Crafty.keys.D) {
+        else if (k == Crafty.keys. || k == Crafty.keys.D) {
             var movement = 1;
             var which = 'x';
         } else {
@@ -64,6 +90,6 @@ Crafty.c('Player', {
 
         // handle removing player from tile's contents array
         this.tile.leave();
-        this.moveTo(newTile);
+        this.moveTo(newTile); */
     }
 });

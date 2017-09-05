@@ -8,10 +8,18 @@ Crafty.c('Actor', {
       .color("#888888");
 
     // Used for constant velocity
-    this.v = { x: 0, y: 0 };
+    this.v = { x: -1, y: 0 };
+
+    console.log(this.w)
 
     this.bind('EnterFrame', function() {
       this.attr({ x: this.x + this.v.x, y: this.y + this.v.y });
+
+      if (this.x < this.w * -1)
+      { 
+        console.log('moving tile');
+        this.x = this.w * config("level").widthInTiles;
+      }
     });
   },
 
