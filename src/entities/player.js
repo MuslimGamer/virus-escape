@@ -40,8 +40,8 @@ Crafty.c('Player', {
         } else {
             return;
         }
-        y = this.tile.tiledata.y;
-        x = this.tile.tiledata.x;
+        var y = this.tile.tiledata.y;
+        var x = this.tile.tiledata.x;
 
         if (which == 'y') {
             y += movement;
@@ -49,7 +49,7 @@ Crafty.c('Player', {
             x += movement;
         }
 
-        newtile = map.getTile(x, y);
+        var newtile = map.getTile(x, y);
         
         if (newtile == null || newtile.walkable == false) {
             return;

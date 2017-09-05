@@ -1,5 +1,5 @@
 // tile class constructor
-function tiledata(x, y) {
+tiledata = function (x, y) {
     this.tiledata = {
         x: x,
         y: y,
@@ -28,7 +28,7 @@ function tiledata(x, y) {
         },
 
         leave: function(thing) {
-            index = this.contents.indexOf(thing);
+            var index = this.contents.indexOf(thing);
             this.contents.splice(index, 1);
         }
     }
