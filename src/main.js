@@ -30,6 +30,8 @@ Game = {
             Crafty.e('Switch').placeInRandomTile()
                               .addSwitchGate(switchGate);
         }
+
+        Crafty.e('Timer').startTimer();
     },
 
     completeLevel: function() {
