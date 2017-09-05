@@ -17,7 +17,7 @@ Crafty.c('Player', {
         if (tileType == 'WinGate') {
             Game.completeLevel()
         } else if (tileType == 'DangerTile' || 
-                   tileType == 'SwitchGate' && entity.isOn == true) {
+                   (tileType == 'SwitchGate' && entity.isOn == true)) {
             Game.loseLevel()
         } else if (tileType == 'Switch' && entity.isOn == true) { 
             // the entity is the switch tile and it's not activated yet.
