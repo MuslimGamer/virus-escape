@@ -5,7 +5,7 @@ Crafty.c('Gate', {
             .size(32, 32)
             .color('green');
 
-        this.nameInTile = 'WinGate'
+        this.nameInTile = 'WinGate';
     },
 
 })

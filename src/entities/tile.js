@@ -13,6 +13,16 @@ function tiledata(x, y) {
             return this.contents.indexOf(thing) > -1;
         },
 
+        containsArray: function(arrayOfThings) {
+            for (var i = 0; i < arrayOfThings.length; i++) {
+                var thing = arrayOfThings[i];
+                if (this.contains(thing)) {
+                    return true;
+                }
+            }
+            return false;
+        },
+
         enter: function(thing) {
             this.contents.push(thing);
         },

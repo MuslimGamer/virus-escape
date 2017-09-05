@@ -14,20 +14,27 @@ Game = {
         
         map.init(config("level").widthInTiles, config("level").heightInTiles);
 
-        this.toCleanUp = [];
-
         Crafty.e("Level").loadMap(map);
-        var player = Crafty.e("Player").placeInRandomTile();
+        Crafty.e("Player").placeInRandomTile();
 
-        var gate = Crafty.e('Gate').placeInRandomTile();
-        
-        this.toCleanUp.push(player, gate);
+        Crafty.e('Gate').placeInRandomTile();
+
+        for (var i = 0; i < Game.levelNumber; i++) {
+            Crafty.e('AntiVirus').placeInRandomTile();
+        }
     },
 
     completeLevel: function() {
-        console.log('Level ' + this.levelNumber.toString() + ' complete! ' + 
-                    'Starting level ' + (this.levelNumber + 1).toString() + '.');
-        this.levelNumber += 1;
+        console.log('Level ' + Game.levelNumber.toString() + ' complete! ' + 
+                    'Starting level ' + (Game.levelNumber + 1).toString() + '.');
+        Game.levelNumber += 1;
+        this.cleanUp();
+        this.start();
+    },
+
+    loseLevel: function() {
+        console.log('You died at level ' + Game.levelNumber.toString() + "!")
+        Game.levelNumber = 1;
         this.cleanUp();
         this.start();
     },
