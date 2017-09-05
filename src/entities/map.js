@@ -1,25 +1,3 @@
-// tile class constructor
-function tiledata(x, y) {
-    this.tiledata = {
-        x: x,
-        y: y,
-
-        walkable: true,
-        contains: [],
-
-        enter: function(thing) {
-            this.contains.push(thing);
-        },
-
-        leave: function(thing) {
-            index = this.contains.indexOf(thing);
-            this.contains.splice(index, 1);
-        }
-    }
-    
-    return this;
-}
-
 // "Model" data: doesn't know anything about the view, CraftyJS, etc.
 map = {
     init: function(widthInTiles, heightInTiles, levelNumber) {

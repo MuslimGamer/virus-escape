@@ -2,30 +2,21 @@ Crafty.c('Player', {
     init: function() {
         var self = this;
 
-        this.requires("Actor, Controllable")
+        // Tiled already requires Actor
+        this.requires("Tiled, Controllable")
             .size(32, 32)
             .color('white')
             .bind('KeyDown', this.moving);
 
-    },
-    place: function() {
-        // get random x, y coordinates to get a random tile
-        // https://stackoverflow.com/a/4550514
-        tileX = Math.floor(Math.random() * config('level').widthInTiles);
-        tileY = Math.floor(Math.random() * config('level').heightInTiles);
-        newtile = map.getTile(tileX, tileY)
-
-        this.moveTo(newtile);
-
-        return this;
+        this.bind('PlayerMoved', this.moved);
+        
+        this.nameInTile = 'Player'
     },
 
-    moveTo: function(newtile) {
-        this.tile = newtile;
-        newtile.tiledata.enter('Player')
-
-        this.move(newtile.tiledata.x * (config("tileSize") + config("padding")) + config("padding") * 2, 
-                  newtile.tiledata.y * (config("tileSize") + config("padding")) + config("padding") * 2);
+    moved: function() {
+        if (this.tile.tiledata.contains('WinGate')) {
+            Game.completeLevel()
+        }
     },
 
     moving: function(e) {
@@ -71,5 +62,6 @@ Crafty.c('Player', {
         this.tile.tiledata.leave('Player')
         
         this.moveTo(newtile);
+        Crafty.trigger('PlayerMoved');
     }
 });

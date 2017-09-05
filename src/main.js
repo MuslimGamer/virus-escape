@@ -14,8 +14,30 @@ Game = {
         
         map.init(config("level").widthInTiles, config("level").heightInTiles);
 
+        this.toCleanUp = [];
+
         Crafty.e("Level").loadMap(map);
-        Crafty.e("Player").place();
+        var player = Crafty.e("Player").placeInRandomTile();
+
+        var gate = Crafty.e('Gate').placeInRandomTile();
+        
+        this.toCleanUp.push(player, gate);
+    },
+
+    completeLevel: function() {
+        console.log('Level ' + this.levelNumber.toString() + ' complete! ' + 
+                    'Starting level ' + (this.levelNumber + 1).toString() + '.');
+        this.levelNumber += 1;
+        this.cleanUp();
+        this.start();
+    },
+
+    cleanUp: function() {
+        // copypaste from house of jinn
+        var everything = Crafty("*");
+        for (var i = 0; i < everything.length; i++) {
+            Crafty(everything[i]).destroy();
+        }
     }
 };
 
