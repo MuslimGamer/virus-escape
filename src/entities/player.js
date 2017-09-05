@@ -11,62 +11,65 @@ Crafty.c('Player', {
     place: function() {
         // get random x, y coordinates to get a random tile
         // https://stackoverflow.com/a/4550514
-        this.tile_x = Math.floor(Math.random() * config('level').widthInTiles);
-        this.tile_y = Math.floor(Math.random() * config('level').heightInTiles);
+        tileX = Math.floor(Math.random() * config('level').widthInTiles);
+        tileY = Math.floor(Math.random() * config('level').heightInTiles);
+        newtile = map.getTile(tileX, tileY)
 
-        this.moveTo(this.tile_x, this.tile_y);
+        this.moveTo(newtile);
 
         return this;
     },
 
-    moveTo: function(x, y) {
-        // set coordinate properties to given coordinates, just in case
-        this.tile_x = x;
-        this.tile_y = y;
+    moveTo: function(newtile) {
+        this.tile = newtile;
+        newtile.tiledata.enter('Player')
 
-        this.move(x * (config("tileSize") + config("padding")) + config("padding") * 2, 
-                  y * (config("tileSize") + config("padding")) + config("padding") * 2);
+        this.move(newtile.tiledata.x * (config("tileSize") + config("padding")) + config("padding") * 2, 
+                  newtile.tiledata.y * (config("tileSize") + config("padding")) + config("padding") * 2);
     },
 
     moving: function(e) {
         var k = e.key;
 
         if (k == Crafty.keys.UP_ARROW || k == Crafty.keys.W) {
-            var coordinate = this.tile_y;
             var tileLength = config('level').heightInTiles - 1; // minus one because the tiles are zero-based
             var movement = -1;
             var which = 'y';
         }
         else if (k == Crafty.keys.DOWN_ARROW || k == Crafty.keys.S) {
-            var coordinate = this.tile_y;
             var tileLength = config('level').heightInTiles - 1;
             var movement = 1;
             var which = 'y';
         }
         else if (k == Crafty.keys.LEFT_ARROW || k == Crafty.keys.A) {
-            var coordinate = this.tile_x;
             var tileLength = config('level').widthInTiles - 1;
             var movement = -1;
             var which = 'x';
         }
         else if (k == Crafty.keys.RIGHT_ARROW || k == Crafty.keys.D) {
-            var coordinate = this.tile_x;
             var tileLength = config('level').widthInTiles - 1;
             var movement = 1;
             var which = 'x';
         } else {
             return;
         }
+        y = this.tile.tiledata.y;
+        x = this.tile.tiledata.x;
 
-        var ghost = coordinate + movement;
-        // check if the movement would keep the player in the grid
-        if (!(ghost > tileLength || ghost < 0)) {
-            if (which == 'y') {
-                this.tile_y += movement;
-            } else {
-                this.tile_x += movement;
-            }
-            this.moveTo(this.tile_x, this.tile_y);
+        if (which == 'y') {
+            y += movement;
+        } else {
+            x += movement;
         }
+
+        newtile = map.getTile(x, y);
+        
+        if (newtile == null || newtile.walkable == false) {
+            return;
+        }
+        // handle removing player from tile's contains array
+        this.tile.tiledata.leave('Player')
+        
+        this.moveTo(newtile);
     }
 });

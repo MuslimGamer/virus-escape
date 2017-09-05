@@ -1,3 +1,16 @@
+// Tile: the square unit you can walk on
+Crafty.c('Tile', {
+    init: function() {
+        this.requires('Actor');
+    },
+
+    Tile: function(tilebase) {
+        // maps the data class as a property
+        this.tiledata = tilebase.tiledata
+        
+        return this;
+    }
+});
 // Level: the thing you see on the screen. Uses a map for data.
 Crafty.c('Level', {
     init: function() {
@@ -15,12 +28,15 @@ Crafty.c('Level', {
 
         for (var y = 0; y < this.map.heightInTiles; y++) {
             for (var x = 0; x < this.map.widthInTiles; x++) {
-                var mapTile = Crafty.e("Actor")
-                    .size(tileSize, tileSize)
-                    .move(x * (tileSize + config("padding")), y * (tileSize + config("padding")))
-                    .color("blue");
+                var tilebase = this.map.getTile(x, y)
                 
-                this.map.getTile(x, y).view = mapTile;
+                var mapTile = Crafty.e('Tile')
+                                    .Tile(tilebase)
+                                    .size(tileSize, tileSize)
+                                    .move(x * (tileSize + config("padding")), y * (tileSize + config("padding")))
+                                    .color("blue");
+
+                this.map.setTile(x, y, mapTile);
             }
         }
     }
