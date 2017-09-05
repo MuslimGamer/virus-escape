@@ -16,6 +16,8 @@ function tileData(x, y) {
         leave: function() {
             this.contents = '';
             this.entity = null;
+            this.view.color('silver');
+            this.walkable = false;
         },
 
         setView: function(view) {
