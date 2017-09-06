@@ -15,8 +15,7 @@ Crafty.c('Player', {
 
         if (tileType == 'WinGate') {
             Game.completeLevel();
-        } else if (tileType == 'DangerTile' || 
-                   (tileType == 'SwitchGate' && newTile.isOn == true)) {
+        } else if (tileType == 'DangerTile') {
             Game.loseLevel();
         } else if (tileType == 'Switch' && newTile.isOn == true) { 
             newTile.activate();

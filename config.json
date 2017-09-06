@@ -8,8 +8,19 @@ externs = {
     "tileSize": 64, // tiles are 32x32px
     "padding": 8,
     "timerSeconds": 10, // set to 0 to disable
+
     "dangerTilesPerLevel": 1, // multiplier for danger tiles. increment sparingly. zero to disable
     "switchGatesPerLevel": 1, // multiplier for switch gates. increment sparingly. zero to disable
+
     "WalkedTileSetting": "open", // open: walkable more than once. closed: walkable once - not deadly. closed-deadly: walkable once - deadly
-    "mapSeed": "" // seed for generating the map
+    "mapSeed": "", // seed for generating the map
+
+    "switchGatesBefore": {
+        tileType: "SwitchGate", // set to SwitchGate to disable danger or DangerTile to enable danger
+        walkable: false
+    },
+    "switchGatesAfter": {
+        tileType: "SwitchGate",
+        walkable: true
+    }
 }
