@@ -48,6 +48,7 @@ Game = {
     loseLevel: function() {
         console.log('You died at level ' + Game.levelNumber.toString() + "!");
         Game.levelNumber = 1;
+        seedGen.newSeed()
         this.cleanUp();
         this.start();
     },

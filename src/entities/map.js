@@ -1,3 +1,19 @@
+// the seed based generator
+// TODO: figure out how to access automatically generated internal seed.
+// for now, we'll just use the current timestamp.
+var seedGen = {
+    newSeed: function() {
+        var seed = Date.now();
+        // var seed = 'hello';
+        // the above seed gets unsolvable at level 16.
+        console.log('The seed is: "' + seed.toString() + '".');
+        this.rng = new Math.seedrandom(seed);
+
+        return this;
+    },
+};
+seedGen.newSeed();
+
 // tile data class constructor
 function tileData(x, y) {
     this.tileData = {
@@ -111,8 +127,8 @@ map = {
         // get random x, y coordinates to get a random tile
         // https://stackoverflow.com/a/4550514
         while (isTileOccupied) {
-            var tileX = Math.floor(Math.random() * config('level').widthInTiles);
-            var tileY = Math.floor(Math.random() * config('level').heightInTiles);
+            var tileX = Math.floor(seedGen.rng() * config('level').widthInTiles);
+            var tileY = Math.floor(seedGen.rng() * config('level').heightInTiles);
             var newTile = map.getTile(tileX, tileY);
 
             // check if tile is empty
