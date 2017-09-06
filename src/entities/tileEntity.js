@@ -11,7 +11,7 @@ Crafty.c('TileEntity', {
 
     moveTo: function(newTile) {
         this.tile = newTile;
-        newTile.enter(this)
+        newTile.enter(this);
 
         this.move(newTile.x * (config("tileSize") + config("padding")) + config("padding") * 2, 
                   newTile.y * (config("tileSize") + config("padding")) + config("padding") * 2);
@@ -37,4 +37,4 @@ Crafty.c('TileEntity', {
 
         return this;
     }
-})
+});

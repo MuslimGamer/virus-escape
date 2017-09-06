@@ -46,7 +46,7 @@ Game = {
     },
 
     loseLevel: function() {
-        console.log('You died at level ' + Game.levelNumber.toString() + "!")
+        console.log('You died at level ' + Game.levelNumber.toString() + "!");
         Game.levelNumber = 1;
         this.cleanUp();
         this.start();

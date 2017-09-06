@@ -33,7 +33,7 @@ function tileData(x, y) {
         },
 
         setView: function(view) {
-            this.view = view
+            this.view = view;
 
             return this;
         },
@@ -62,7 +62,7 @@ function tileData(x, y) {
         },
 
         activate: function() {
-            if (! this.contents == 'Switch') {
+            if (this.contents != 'Switch') {
                 return this;
             }
 
@@ -83,7 +83,7 @@ function tileData(x, y) {
         }
 
 
-    }
+    };
     
     return this.tileData;
 }
@@ -131,4 +131,4 @@ map = {
     getKey: function(x, y) {
         return x + ", " + y;
     }
-}
+};

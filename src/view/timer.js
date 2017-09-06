@@ -25,4 +25,4 @@ Crafty.c('GameOverTimer', {
 
         return this;
     }
-})
+});

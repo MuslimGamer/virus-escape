@@ -14,12 +14,12 @@ Crafty.c('Player', {
         var tileType = newTile.contents;
 
         if (tileType == 'WinGate') {
-            Game.completeLevel()
+            Game.completeLevel();
         } else if (tileType == 'DangerTile' || 
                    (tileType == 'SwitchGate' && newTile.isOn == true)) {
-            Game.loseLevel()
+            Game.loseLevel();
         } else if (tileType == 'Switch' && newTile.isOn == true) { 
-            newTile.activate()
+            newTile.activate();
         }
     },
 
