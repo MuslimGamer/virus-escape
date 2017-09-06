@@ -55,7 +55,7 @@ Crafty.c('Player', {
 
         var newTile = map.getTile(x, y);
         
-        if (newTile == null || newTile.walkable == false) {
+        if (newTile == null || newTile.walkable == false || newTile == this.tile) {
             return;
         }
         Crafty.trigger('PlayerMoved', newTile);

@@ -37,6 +37,11 @@ Game = {
         }
     },
 
+    preStart: function() {
+        map.newSeed();
+        Game.start();
+    },
+
     completeLevel: function() {
         console.log('Level ' + Game.levelNumber.toString() + ' complete! ' + 
                     'Starting level ' + (Game.levelNumber + 1).toString() + '.');
@@ -49,7 +54,7 @@ Game = {
         console.log('You died at level ' + Game.levelNumber.toString() + "!");
         Game.levelNumber = 1;
         this.cleanUp();
-        this.start();
+        this.preStart();
     },
 
     cleanUp: function() {
@@ -61,4 +66,4 @@ Game = {
     }
 };
 
-window.addEventListener('load', Game.start);
+window.addEventListener('load', Game.preStart);

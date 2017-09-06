@@ -15,15 +15,15 @@ function tileData(x, y) {
 
         leave: function() {
             switch (config('WalkedTileSetting')) {
-                case 0:
+                case "open":
                     this.contents = '';
                     break;
-                case 1:
+                case "closed":
                     this.contents = '';
                     this.view.color('silver');
                     this.walkable = false;
                     break;
-                case 2:
+                case "closed-deadly":
                     this.contents = 'DangerTile';
                     this.view.color('silver');
                     break;
@@ -105,14 +105,35 @@ map = {
         }
     },
 
+    seed: '',
+
+    // the seed based generator
+    // TODO: figure out how to access automatically generated internal seed.
+    // for now, we'll just use the current timestamp.
+    newSeed: function() {
+        if (config('mapSeed') == '') {
+            this.seed = Date.now();
+        } else {
+            this.seed = config('mapSeed');
+        }
+
+        // this.seed = 'hello';
+        // the above seed gets unsolvable at level 16.
+
+        console.log('The seed is: "' + this.seed.toString() + '".');
+        this.rng = new Math.seedrandom(this.seed);
+
+        return this;
+    },
+
     getRandomTile: function() {
         var isTileOccupied = true;
         
         // get random x, y coordinates to get a random tile
         // https://stackoverflow.com/a/4550514
         while (isTileOccupied) {
-            var tileX = Math.floor(Math.random() * config('level').widthInTiles);
-            var tileY = Math.floor(Math.random() * config('level').heightInTiles);
+            var tileX = Math.floor(map.rng() * config('level').widthInTiles);
+            var tileY = Math.floor(map.rng() * config('level').heightInTiles);
             var newTile = map.getTile(tileX, tileY);
 
             // check if tile is empty

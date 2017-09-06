@@ -25,8 +25,8 @@ Crafty.c('TileEntity', {
         // get random x, y coordinates to get a random tile
         // https://stackoverflow.com/a/4550514
         while (isTileOccupied) {
-            var tileX = Math.floor(Math.random() * config('level').widthInTiles);
-            var tileY = Math.floor(Math.random() * config('level').heightInTiles);
+            var tileX = Math.floor(map.rng() * config('level').widthInTiles);
+            var tileY = Math.floor(map.rng() * config('level').heightInTiles);
             var newTile = map.getTile(tileX, tileY);
 
             // check if tile is empty
