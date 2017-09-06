@@ -13,9 +13,6 @@ Crafty.c('GameOverTimer', {
 
     startTimer: function() {
         this.timerSeconds = config('timerSeconds');
-        if (this.timerSeconds == 0) {
-            return this;
-        }
         this.text(this.timerSeconds.toString());
         this.delay(this.timerTick, 1000, this.timerSeconds, function() {Game.loseLevel();});
 

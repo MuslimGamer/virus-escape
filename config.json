@@ -7,5 +7,7 @@ externs = {
 
     "tileSize": 64, // tiles are 32x32px
     "padding": 8,
-    "timerSeconds": 0 // set to 0 to disable
+    "timerSeconds": 0, // set to 0 to disable
+    "dangerTilesPerLevel": 1, // multiplier for danger tiles. increment sparingly. zero to disable
+    "switchGatesPerLevel": 1, // multiplier for switch gates. increment sparingly. zero to disable
 }

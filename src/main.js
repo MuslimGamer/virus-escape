@@ -19,19 +19,23 @@ Game = {
 
         Crafty.e('WinGate').placeInRandomTile();
 
-        for (var i = 0; i < Game.levelNumber; i++) {
+        var dangerTilesNo = Game.levelNumber * config('dangerTilesPerLevel');
+
+        for (var i = 0; i < dangerTilesNo; i++) {
             Crafty.e('DangerTile').placeInRandomTile();
         }
 
-        var switchGateNo = Math.floor((Game.levelNumber/2) + 1)
+        var switchGateNo = Math.floor((Game.levelNumber/2) + 1) * config('switchGatesPerLevel');
 
         for (var i = 0; i < switchGateNo; i++) {
             var switchGate = Crafty.e('SwitchGate').placeInRandomTile();
             Crafty.e('Switch').placeInRandomTile()
-                              .addSwitchGate(switchGate);
+                                .addSwitchGate(switchGate);
         }
-
-        Crafty.e('GameOverTimer').startTimer();
+        
+        if (config('timerSeconds') != 0) {
+            Crafty.e('GameOverTimer').startTimer();
+        }
     },
 
     completeLevel: function() {
