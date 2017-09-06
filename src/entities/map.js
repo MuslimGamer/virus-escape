@@ -129,7 +129,7 @@ map = {
         var isTileOccupied = true;
         var isTooClose = false;
 
-        // TODO: make WinGate not spawn too close to player
+        // DONE: make WinGate not spawn too close to player
         // good seed for testing is 1531171161
         
         // get random x, y coordinates to get a random tile
