@@ -36,15 +36,15 @@ Game = {
         console.log('Level ' + Game.levelNumber.toString() + ' complete! ' + 
                     'Starting level ' + (Game.levelNumber + 1).toString() + '.');
         Game.levelNumber += 1;
-        this.cleanUp();
-        this.start();
+        Game.cleanUp();
+        Game.start();
     },
 
     loseLevel: function() {
         console.log('You died at level ' + Game.levelNumber.toString() + "!")
         Game.levelNumber = 1;
-        this.cleanUp();
-        this.start();
+        Game.cleanUp();
+        Game.start();
     },
 
     cleanUp: function() {
@@ -53,6 +53,7 @@ Game = {
         for (var i = 0; i < everything.length; i++) {
             Crafty(everything[i]).destroy();
         }
+        return 1;
     }
 };
 

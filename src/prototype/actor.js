@@ -10,14 +10,11 @@ Crafty.c('Actor', {
     // Used for constant velocity
     this.v = { x: -1, y: 0 };
 
-    console.log(this.w)
-
     this.bind('EnterFrame', function() {
       this.attr({ x: this.x + this.v.x, y: this.y + this.v.y });
 
       if (this.x < this.w * -1)
       { 
-        console.log('moving tile');
         this.x = this.w * config("level").widthInTiles;
       }
     });
@@ -131,6 +128,8 @@ Crafty.c('Actor', {
 
   // Start moving
   velocity: function(x, y) {
+    x = x * config("speed")
+    y = y * config("speed")
     this.v = { x: x || 0, y: y || 0 };
     return this;
   },

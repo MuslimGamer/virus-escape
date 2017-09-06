@@ -5,9 +5,16 @@ Crafty.c('Player', {
             .color('white')
             .bind('KeyDown', this.moving);
 
-        this.bind('PlayerMoved', this.moved);
+        this.velocity(1,0);           //Initial player movement
+        //this.bind('PlayerMoved', this.moved);
+        this.bind('')
         
         this.nameInTile = 'Player';
+
+        this.collide('DangerTile', Game.loseLevel)      //Touch danger object - Lose
+        this.collide('WinGate', Game.completeLevel)     //Touch wingate - Win
+      //  this.collide('Switch', entity.activate)
+
     },
 
     moved: function(newTile) {
