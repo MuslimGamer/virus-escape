@@ -31,15 +31,15 @@ function tileData(x, y) {
 
         leave: function() {
             switch (config('WalkedTileSetting')) {
-                case 0:
+                case "open":
                     this.contents = '';
                     break;
-                case 1:
+                case "closed":
                     this.contents = '';
                     this.view.color('silver');
                     this.walkable = false;
                     break;
-                case 2:
+                case "closed-deadly":
                     this.contents = 'DangerTile';
                     this.view.color('silver');
                     break;
