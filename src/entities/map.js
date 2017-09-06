@@ -117,6 +117,7 @@ map = {
             this.seed = Srand.randomize();
         } else {
             this.seed = config('mapSeed');
+            Srand.seed(this.seed);
         }
 
         console.log('The seed is: "' + this.seed.toString() + '".');
@@ -126,6 +127,9 @@ map = {
 
     getRandomTile: function() {
         var isTileOccupied = true;
+
+        // TODO: make WinGate not spawn too close to player
+        // good seed for testing is 1531171161
         
         // get random x, y coordinates to get a random tile
         // https://stackoverflow.com/a/4550514
