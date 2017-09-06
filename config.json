@@ -6,5 +6,9 @@ externs = {
     },
 
     "tileSize": 64, // tiles are 32x32px
-    "padding": 8
+    "padding": 8,
+    "timerSeconds": 10, // set to 0 to disable
+    "dangerTilesPerLevel": 1, // multiplier for danger tiles. increment sparingly. zero to disable
+    "switchGatesPerLevel": 1, // multiplier for switch gates. increment sparingly. zero to disable
+    "WalkedTileSetting": 2 // 0: walkable more than once, 1: walkable once, not deadly, 2: walkable once, deadly
 }

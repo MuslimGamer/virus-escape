@@ -12,16 +12,14 @@ Crafty.c('Player', {
 
     moved: function(newTile) {
         var tileType = newTile.contents;
-        var entity = newTile.entity;
 
         if (tileType == 'WinGate') {
-            Game.completeLevel()
+            Game.completeLevel();
         } else if (tileType == 'DangerTile' || 
-                   (tileType == 'SwitchGate' && entity.isOn == true)) {
-            Game.loseLevel()
-        } else if (tileType == 'Switch' && entity.isOn == true) { 
-            // the entity is the switch tile and it's not activated yet.
-            entity.activate()
+                   (tileType == 'SwitchGate' && newTile.isOn == true)) {
+            Game.loseLevel();
+        } else if (tileType == 'Switch' && newTile.isOn == true) { 
+            newTile.activate();
         }
     },
 

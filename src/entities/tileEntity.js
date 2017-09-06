@@ -11,7 +11,7 @@ Crafty.c('TileEntity', {
 
     moveTo: function(newTile) {
         this.tile = newTile;
-        newTile.enter(this)
+        newTile.enter(this);
 
         this.move(newTile.x * (config("tileSize") + config("padding")) + config("padding") * 2, 
                   newTile.y * (config("tileSize") + config("padding")) + config("padding") * 2);
@@ -20,20 +20,21 @@ Crafty.c('TileEntity', {
     },
 
     placeInRandomTile: function() {
-        var condition = true;
-
+        var isTileOccupied = true;
+        
         // get random x, y coordinates to get a random tile
         // https://stackoverflow.com/a/4550514
-        while (condition) {
+        while (isTileOccupied) {
             var tileX = Math.floor(Math.random() * config('level').widthInTiles);
             var tileY = Math.floor(Math.random() * config('level').heightInTiles);
             var newTile = map.getTile(tileX, tileY);
 
-            var condition = Boolean(newTile.contents)
+            // check if tile is empty
+            var isTileOccupied = newTile.contents != '';
         }
 
         this.moveTo(newTile);
 
         return this;
     }
-})
+});

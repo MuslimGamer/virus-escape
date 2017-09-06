@@ -6,22 +6,84 @@ function tileData(x, y) {
 
         walkable: true,
         contents: '',
-        entity: null,
 
         enter: function(thing) {
             this.contents = thing.nameInTile;
-            this.entity = thing;
+
+            return this;
         },
 
         leave: function() {
-            this.contents = '';
-            this.entity = null;
+            switch (config('WalkedTileSetting')) {
+                case 0:
+                    this.contents = '';
+                    break;
+                case 1:
+                    this.contents = '';
+                    this.view.color('silver');
+                    this.walkable = false;
+                    break;
+                case 2:
+                    this.contents = 'DangerTile';
+                    this.view.color('silver');
+                    break;
+            }
+
+            return this;
         },
 
         setView: function(view) {
-            this.view = view
+            this.view = view;
+
+            return this;
+        },
+
+        setDangerTile: function() {
+            this.view.color('red');
+            this.contents = 'DangerTile';
+
+            return this;
+        },
+
+        setWinGate: function() {
+            this.view.color('green');
+            this.contents = 'WinGate';
+
+            return this;
+        },
+
+        setSwitch: function(switchGate) {
+            this.view.color('yellow');
+            this.contents = 'Switch';
+            this.isOn = true;
+            this.switchGate = switchGate;
+
+            return this;
+        },
+
+        activate: function() {
+            if (this.contents != 'Switch') {
+                return this;
+            }
+
+            this.isOn = false;
+            this.view.color('yellow', 0.5);
+            this.switchGate.isOn = false;
+            this.switchGate.view.color('maroon', 0.5);
+
+            return this;
+        },
+
+        setSwitchGate: function() {
+            this.view.color('maroon');
+            this.contents = 'SwitchGate';
+            this.isOn = true;
+
+            return this;
         }
-    }
+
+
+    };
     
     return this.tileData;
 }
@@ -42,6 +104,23 @@ map = {
             }
         }
     },
+
+    getRandomTile: function() {
+        var isTileOccupied = true;
+        
+        // get random x, y coordinates to get a random tile
+        // https://stackoverflow.com/a/4550514
+        while (isTileOccupied) {
+            var tileX = Math.floor(Math.random() * config('level').widthInTiles);
+            var tileY = Math.floor(Math.random() * config('level').heightInTiles);
+            var newTile = map.getTile(tileX, tileY);
+
+            // check if tile is empty
+            var isTileOccupied = newTile.contents != '';
+        }
+
+        return newTile;
+    },
     
     getTile: function(x, y) {
         return this.data[this.getKey(x, y)];
@@ -52,4 +131,4 @@ map = {
     getKey: function(x, y) {
         return x + ", " + y;
     }
-}
+};
