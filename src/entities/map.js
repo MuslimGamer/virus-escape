@@ -14,7 +14,7 @@ function tileData(x, y) {
         },
 
         leave: function() {
-            switch (config('WalkedTileSetting')) {
+            switch (config('walkedTileSetting')) {
                 case "open":
                     this.contents = '';
                     break;
@@ -125,21 +125,31 @@ map = {
         return this;
     },
 
-    getRandomTile: function() {
+    getRandomTile: function(isWinGate) {
         var isTileOccupied = true;
+        var isTooClose = false;
 
         // TODO: make WinGate not spawn too close to player
         // good seed for testing is 1531171161
         
         // get random x, y coordinates to get a random tile
         // https://stackoverflow.com/a/4550514
-        while (isTileOccupied) {
+        while (isTileOccupied && !isTooClose) {
             var tileX = Math.floor(Srand.random() * config('level').widthInTiles);
             var tileY = Math.floor(Srand.random() * config('level').heightInTiles);
             var newTile = map.getTile(tileX, tileY);
 
-            // check if tile is empty
-            var isTileOccupied = newTile.contents != '';
+            if (!isWinGate) {
+                // check if tile is empty
+                isTileOccupied = newTile.contents != '';
+            } else {
+                var diffY = Math.abs(tileY - this.playerTile.y);
+                var diffX = Math.abs(tileX - this.playerTile.x);
+
+                var distance = diffY + diffX;
+
+                isTooClose = (distance > config('winGateProximity'));
+            }
         }
 
         return newTile;

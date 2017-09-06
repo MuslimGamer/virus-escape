@@ -10,6 +10,12 @@ Crafty.c('Player', {
         this.nameInTile = 'Player';
     },
 
+    giveCoordsToMap: function() {
+        map.PlayerTile = this.tile;
+
+        return this;
+    },
+
     moved: function(newTile) {
         var tileType = newTile.contents;
 
