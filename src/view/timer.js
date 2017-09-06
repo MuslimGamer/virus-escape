@@ -16,9 +16,6 @@ Crafty.c('GameOverTimer', {
 
     startTimer: function() {
         this.timerSeconds = config('timerSeconds');
-        if (this.timerSeconds == 0) {
-            return this;
-        }
         this.text(this.timerSeconds.toString());
         this.repeatedly(this.timerTick, 1);
 
