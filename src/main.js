@@ -17,20 +17,19 @@ Game = {
         Crafty.e("Level").loadMap(map);
         Crafty.e("Player").placeInRandomTile();
 
-        Crafty.e('WinGate').placeInRandomTile();
+        map.getRandomTile().setWinGate();
 
         var dangerTilesNo = Game.levelNumber * config('dangerTilesPerLevel');
 
         for (var i = 0; i < dangerTilesNo; i++) {
-            Crafty.e('DangerTile').placeInRandomTile();
+            map.getRandomTile().setDangerTile();
         }
 
         var switchGateNo = Math.floor((Game.levelNumber/2) + 1) * config('switchGatesPerLevel');
 
         for (var i = 0; i < switchGateNo; i++) {
-            var switchGate = Crafty.e('SwitchGate').placeInRandomTile();
-            Crafty.e('Switch').placeInRandomTile()
-                                .addSwitchGate(switchGate);
+            var switchGate = map.getRandomTile().setSwitchGate();
+            map.getRandomTile().setSwitch(switchGate);
         }
         
         if (config('timerSeconds') != 0) {

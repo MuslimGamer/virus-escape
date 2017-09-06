@@ -21,7 +21,7 @@ Crafty.c('TileEntity', {
 
     placeInRandomTile: function() {
         var isTileOccupied = true;
-
+        
         // get random x, y coordinates to get a random tile
         // https://stackoverflow.com/a/4550514
         while (isTileOccupied) {
