@@ -16,6 +16,7 @@ Crafty.c('Actor', {
       if (this.x < this.w * -1)
       { 
         this.x = this.w * config("level").widthInTiles;
+        this.setType('')
       }
     });
   },

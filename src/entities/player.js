@@ -7,14 +7,39 @@ Crafty.c('Player', {
 
         this.velocity(1,0);           //Initial player movement
         //this.bind('PlayerMoved', this.moved);
-        this.bind('')
-        
         this.nameInTile = 'Player';
-
-        this.collide('DangerTile', Game.loseLevel)      //Touch danger object - Lose
-        this.collide('WinGate', Game.completeLevel)     //Touch wingate - Win
+        this.collide('Tile',        this.interact)
+        this.collide('DangerTile',  Game.loseLevel)      //Touch danger object - Lose
+        this.collide('WinGate',     Game.completeLevel)     //Touch wingate - Win
       //  this.collide('Switch', entity.activate)
 
+    },
+
+    interact: function(data, test, test2, test3){
+        if(data[0].type =="SAT"){console.log(data[0])}
+        for(i = 0; i<data.length;i++)
+        {
+            tile = data[i].obj
+            switch(tile.type){
+                case '':                              //Player moved to a new tile. It will not be safe here for long. 
+                    tile.setType('warning')
+                break;
+                case 'warning':                             //Time based trigger already in place, nothing more to process on collision.                  
+                break;
+                case 'danger':                              //Player has wandered in sight of Anti-virus. Game over.
+                 //   game.loseLevel();
+                break;
+                case 'trigger':                             //Player has reached a config file. Time to take control.
+                    tile.setType('trigger-closed')
+                break;
+                case 'trigger-closed':                      //This file has been infected by player already. Nothing more to do. 
+                    //this.color('')
+                break;
+                case 'gate':                                //Player has attempted to access a locked file system. Instantly alerts anti-virus, game over. 
+                 //   game.loseLevel();
+                break; 
+            }
+        }
     },
 
     moved: function(newTile) {

@@ -7,6 +7,8 @@ Crafty.c('Level', {
 
         this.color("#000088")
             .size(config("level").widthInTiles * paddedWidth, config("level").heightInTiles * paddedHeight);
+
+        this.velocity(0,0);
     },
 
     loadMap: function(map) {

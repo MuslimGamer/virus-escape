@@ -17,7 +17,7 @@ Game = {
         Crafty.e("Level").loadMap(map);
         Crafty.e("Player").placeInRandomTile();
 
-        Crafty.e('WinGate').placeInRandomTile();
+      /* Crafty.e('WinGate').placeInRandomTile();
 
         for (var i = 0; i < Game.levelNumber; i++) {
             Crafty.e('DangerTile').placeInRandomTile();
@@ -29,7 +29,7 @@ Game = {
             var switchGate = Crafty.e('SwitchGate').placeInRandomTile();
             Crafty.e('Switch').placeInRandomTile()
                               .addSwitchGate(switchGate);
-        }
+        }*/
     },
 
     completeLevel: function() {
