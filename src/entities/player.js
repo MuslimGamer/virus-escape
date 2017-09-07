@@ -19,9 +19,11 @@ Crafty.c('Player', {
 
         else if (tileType == 'WeakDangerTile') {
             this.health -= config('dangerDamage');
+            this.healthCounter.setHealth(this.health);
+
             if (this.health <= 0) Game.loseLevel();
         } 
-        
+
         else if (tileType == 'StrongDangerTile') Game.loseLevel();
 
         else if (tileType == 'Switch' && newTile.isOn == true) { 
@@ -39,6 +41,11 @@ Crafty.c('Player', {
         this.moveCounter = moveCounter;
         
         return this;
+    },
+
+    setHealthCounter: function(healthCounter) {
+        this.healthCounter = healthCounter;
+        this.healthCounter.setHealth(this.health);
     },
 
     setMoveLimit: function(moveLimit) {

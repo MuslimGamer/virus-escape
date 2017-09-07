@@ -38,15 +38,20 @@ Game = {
             var switchGate = map.getRandomTile().setSwitchGate();
             map.getRandomTile().setSwitch(switchGate);
         }
-        
-        if (config('timerSeconds') != 0) {
-            Crafty.e('GameOverTimer').startTimer();
-        }
 
         if (config('limitedMoves')) {
             playerEntity.setMoveCounter(Crafty.e('MoveCounter'));
             playerEntity.setMoveLimit(map.getMoveLimit());
         }
+
+        if (config('playerHealth') > 0) {
+            playerEntity.setHealthCounter(Crafty.e('HealthCounter'));
+        }
+        
+        if (config('timerSeconds') > 0) {
+            Crafty.e('GameOverTimer').startTimer();
+        }
+
     },
 
     preStart: function() {
