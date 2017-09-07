@@ -22,7 +22,7 @@ function tileData(x, y) {
                     this.view.color('silver');
                     break;
                 case "closed-deadly":
-                    this.contents = 'DangerTile';
+                    this.contents = 'WeakDangerTile';
                     this.view.color('silver');
                     break;
             }
@@ -36,11 +36,16 @@ function tileData(x, y) {
             return this;
         },
 
-        setDangerTile: function() {
+        setWeakDangerTile: function() {
             this.view.color('red');
-            this.contents = 'DangerTile';
+            this.contents = 'WeakDangerTile';
 
             return this;
+        },
+
+        setStrongDangerTile: function() {
+            this.view.color('maroon');
+            this.contents = 'StrongDangerTile';
         },
 
         setWinGate: function() {
@@ -51,7 +56,7 @@ function tileData(x, y) {
         },
 
         setSwitch: function(switchGate) {
-            this.view.color('yellow');
+            this.view.color('aqua');
             this.contents = 'Switch';
             this.isOn = true;
             this.switchGate = switchGate;
@@ -65,15 +70,15 @@ function tileData(x, y) {
             }
 
             this.isOn = false;
-            this.view.color('yellow', 0.5);
-            this.switchGate.view.color('maroon', 0.5);
+            this.view.color('aqua', 0.5);
+            this.switchGate.view.color('purple', 0.5);
             this.switchGate.contents = config('switchGatesAfter').tileType;
 
             return this;
         },
 
         setSwitchGate: function() {
-            this.view.color('maroon');
+            this.view.color('purple');
             this.contents = config('switchGatesBefore').tileType;
 
             return this;

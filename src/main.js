@@ -22,7 +22,15 @@ Game = {
 
         var dangerTilesNo = Game.levelNumber * config('dangerTilesPerLevel');
         for (var i = 0; i < dangerTilesNo; i++) {
-            map.getRandomTile().setDangerTile();
+            if (config('allowWeakDangerTile') && config('allowStrongDangerTile')) {
+                var dangerTile = Srand.choice(['setWeakDangerTile', 'setStrongDangerTile']);
+            } 
+            else if (config('allowWeakDangerTile')) var dangerTile = 'setWeakDangerTile';
+            else if (config('allowStrongDangerTile')) var dangerTile = 'setStrongDangerTile';
+
+            else break;
+
+            map.getRandomTile()[dangerTile]();
         }
 
         var switchGateNo = Math.floor((Game.levelNumber/2) + 1) * config('switchGatesPerLevel');

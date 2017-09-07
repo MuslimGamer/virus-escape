@@ -7,9 +7,16 @@ externs = {
 
     "tileSize": 64, // tiles are 32x32px
     "padding": 8,
+
     "timerSeconds": 0, // set to 0 to disable
     "limitedMoves": true,
     "extraMoves": 3, // added to the generated number.
+
+    "playerHealth": 10,
+    "dangerDamage": 5,
+
+    "allowWeakDangerTile": true,
+    "allowStrongDangerTile": true,
 
     "dangerTilesPerLevel": 1, // multiplier for danger tiles. increment sparingly. zero to disable
     "switchGatesPerLevel": 1, // multiplier for switch gates. increment sparingly. zero to disable

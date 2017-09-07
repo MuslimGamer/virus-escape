@@ -8,18 +8,23 @@ Crafty.c('Player', {
         this.bind('PlayerMoved', this.moved);
         
         this.nameInTile = 'Player';
+
+        this.health = config('playerHealth');
     },
 
     moved: function(newTile) {
         var tileType = newTile.contents;
 
-        if (tileType == 'WinGate') {
-            Game.completeLevel();
+        if (tileType == 'WinGate') Game.completeLevel();
 
-        } else if (tileType == 'DangerTile') {
-            Game.loseLevel();
+        else if (tileType == 'WeakDangerTile') {
+            this.health -= config('dangerDamage');
+            if (this.health <= 0) Game.loseLevel();
+        } 
+        
+        else if (tileType == 'StrongDangerTile') Game.loseLevel();
 
-        } else if (tileType == 'Switch' && newTile.isOn == true) { 
+        else if (tileType == 'Switch' && newTile.isOn == true) { 
             newTile.activate();
         }
 

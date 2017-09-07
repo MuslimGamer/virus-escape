@@ -15,7 +15,7 @@ Crafty.c('SwitchGate', {
 Crafty.c('Switch', {
     init: function() {
         this.requires('TileEntity')
-            .color('yellow');
+            .color('aqua');
 
         this.nameInTile = 'Switch';
     },
@@ -31,6 +31,6 @@ Crafty.c('Switch', {
         this.SwitchGate.isOn = false;
         this.SwitchGate.color('maroon', 0.5)
         this.isOn = false;
-        this.color('yellow', 0.5)
+        this.color('aqua', 0.5)
     }
 }) 
