@@ -31,6 +31,13 @@ map = {
         return this;
     },
 
+    getMoveLimit: function() {
+        var diffY = Math.abs(this.winGate.y - this.playerTile.y);
+        var diffX = Math.abs(this.winGate.x - this.playerTile.x);
+
+        return (diffY + diffX) + config('extraMoves');
+    },
+
     getRandomTile: function(isWinGate) {
         var isTileOccupied = true;
         var isTooClose = false;
@@ -57,6 +64,10 @@ map = {
                 isTooClose = (distance < config('minDistanceToGate'));
                 isTileOccupied = newTile.contents != '';
             }
+        }
+
+        if (isWinGate) {
+            this.winGate = newTile;
         }
 
         return newTile;

@@ -13,21 +13,19 @@ Game = {
         Crafty.background('black');
         
         map.init(config("level").widthInTiles, config("level").heightInTiles);
-
         Crafty.e("Level").loadMap(map);
-        var playerEntity = Crafty.e("Player").placeInRandomTile();
 
+        var playerEntity = Crafty.e("Player").placeInRandomTile();
         map.playerTile = playerEntity.tile;
+
         map.getRandomTile(true).setWinGate();
 
         var dangerTilesNo = Game.levelNumber * config('dangerTilesPerLevel');
-
         for (var i = 0; i < dangerTilesNo; i++) {
             map.getRandomTile().setDangerTile();
         }
 
         var switchGateNo = Math.floor((Game.levelNumber/2) + 1) * config('switchGatesPerLevel');
-
         for (var i = 0; i < switchGateNo; i++) {
             var switchGate = map.getRandomTile().setSwitchGate();
             map.getRandomTile().setSwitch(switchGate);
@@ -35,6 +33,11 @@ Game = {
         
         if (config('timerSeconds') != 0) {
             Crafty.e('GameOverTimer').startTimer();
+        }
+
+        if (config('limitedMoves')) {
+            playerEntity.setMoveCounter(Crafty.e('MoveCounter'));
+            playerEntity.setMoveLimit(map.getMoveLimit());
         }
     },
 

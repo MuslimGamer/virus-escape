@@ -15,11 +15,32 @@ Crafty.c('Player', {
 
         if (tileType == 'WinGate') {
             Game.completeLevel();
+
         } else if (tileType == 'DangerTile') {
             Game.loseLevel();
+
         } else if (tileType == 'Switch' && newTile.isOn == true) { 
             newTile.activate();
         }
+
+        if (config('limitedMoves')) {
+            if (this.moves < 1) Game.loseLevel();
+            this.moves -= 1;
+            this.moveCounter.setMoves(this.moves);
+        }
+    },
+
+    setMoveCounter: function(moveCounter) {
+        this.moveCounter = moveCounter;
+        
+        return this;
+    },
+
+    setMoveLimit: function(moveLimit) {
+        this.moves = moveLimit + config('extraMoves');
+        this.moveCounter.setMoves(this.moves);
+
+        return this;
     },
 
     moving: function(e) {
@@ -54,7 +75,7 @@ Crafty.c('Player', {
 
         var newTile = map.getTile(x, y);
         
-        if (newTile == null || newTile.walkable == false || newTile == this.tile) {
+        if (newTile == null || newTile.contents == 'WallTile' || newTile == this.tile) {
             return;
         }
         Crafty.trigger('PlayerMoved', newTile);
