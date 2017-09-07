@@ -1,94 +1,3 @@
-// tile data class constructor
-function tileData(x, y) {
-    this.tileData = {
-        x: x,
-        y: y,
-
-        walkable: true,
-        contents: '',
-
-        enter: function(thing) {
-            this.contents = thing.nameInTile;
-
-            return this;
-        },
-
-        leave: function() {
-            switch (config('walkedTileSetting')) {
-                case "open":
-                    this.contents = '';
-                    break;
-                case "closed":
-                    this.contents = '';
-                    this.view.color('silver');
-                    this.walkable = false;
-                    break;
-                case "closed-deadly":
-                    this.contents = 'DangerTile';
-                    this.view.color('silver');
-                    break;
-            }
-
-            return this;
-        },
-
-        setView: function(view) {
-            this.view = view;
-
-            return this;
-        },
-
-        setDangerTile: function() {
-            this.view.color('red');
-            this.contents = 'DangerTile';
-
-            return this;
-        },
-
-        setWinGate: function() {
-            this.view.color('green');
-            this.contents = 'WinGate';
-
-            return this;
-        },
-
-        setSwitch: function(switchGate) {
-            this.view.color('yellow');
-            this.contents = 'Switch';
-            this.isOn = true;
-            this.switchGate = switchGate;
-
-            return this;
-        },
-
-        activate: function() {
-            if (this.contents != 'Switch') {
-                return this;
-            }
-
-            this.isOn = false;
-            this.view.color('yellow', 0.5);
-            this.switchGate.view.color('maroon', 0.5);
-            this.switchGate.contents = config('switchGatesAfter').tileType;
-            this.switchGate.walkable = config('switchGatesAfter').walkable;
-
-            return this;
-        },
-
-        setSwitchGate: function() {
-            this.view.color('maroon');
-            this.contents = config('switchGatesBefore').tileType;
-            this.walkable = config('switchGatesBefore').walkable;
-
-            return this;
-        }
-
-
-    };
-    
-    return this.tileData;
-}
-
 // "Model" data: doesn't know anything about the view, CraftyJS, etc.
 map = {
     init: function(widthInTiles, heightInTiles, levelNumber) {
@@ -106,7 +15,6 @@ map = {
         }
     },
 
-    seed: '',
 
     // for now, we'll just use the current timestamp.
     newSeed: function() {
