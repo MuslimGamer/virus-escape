@@ -108,8 +108,6 @@ map = {
 
     seed: '',
 
-    // the seed based generator
-    // TODO: figure out how to access automatically generated internal seed.
     // for now, we'll just use the current timestamp.
     newSeed: function() {
         if (config('mapSeed') == '') {
@@ -134,7 +132,7 @@ map = {
         
         // get random x, y coordinates to get a random tile
         // https://stackoverflow.com/a/4550514
-        while (isTileOccupied && !isTooClose) {
+        while (isTileOccupied || isTooClose) {
             var tileX = Math.floor(Srand.random() * config('level').widthInTiles);
             var tileY = Math.floor(Srand.random() * config('level').heightInTiles);
             var newTile = map.getTile(tileX, tileY);
@@ -148,7 +146,8 @@ map = {
 
                 var distance = diffY + diffX;
 
-                isTooClose = (distance > config('winGateProximity'));
+                isTooClose = (distance < config('minDistanceToGate'));
+                isTileOccupied = newTile.contents != '';
             }
         }
 
