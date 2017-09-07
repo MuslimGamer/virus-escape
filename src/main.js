@@ -15,9 +15,10 @@ Game = {
         map.init(config("level").widthInTiles, config("level").heightInTiles);
 
         Crafty.e("Level").loadMap(map);
-        Crafty.e("Player").placeInRandomTile();
+        var playerEntity = Crafty.e("Player").placeInRandomTile();
 
-        map.getRandomTile().setWinGate();
+        map.playerTile = playerEntity.tile;
+        map.getRandomTile(true).setWinGate();
 
         var dangerTilesNo = Game.levelNumber * config('dangerTilesPerLevel');
 

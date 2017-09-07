@@ -10,13 +10,18 @@ Crafty.c('Player', {
         this.nameInTile = 'Player';
     },
 
+    giveCoordsToMap: function() {
+        map.PlayerTile = this.tile;
+
+        return this;
+    },
+
     moved: function(newTile) {
         var tileType = newTile.contents;
 
         if (tileType == 'WinGate') {
             Game.completeLevel();
-        } else if (tileType == 'DangerTile' || 
-                   (tileType == 'SwitchGate' && newTile.isOn == true)) {
+        } else if (tileType == 'DangerTile') {
             Game.loseLevel();
         } else if (tileType == 'Switch' && newTile.isOn == true) { 
             newTile.activate();

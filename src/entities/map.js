@@ -14,7 +14,7 @@ function tileData(x, y) {
         },
 
         leave: function() {
-            switch (config('WalkedTileSetting')) {
+            switch (config('walkedTileSetting')) {
                 case "open":
                     this.contents = '';
                     break;
@@ -68,16 +68,17 @@ function tileData(x, y) {
 
             this.isOn = false;
             this.view.color('yellow', 0.5);
-            this.switchGate.isOn = false;
             this.switchGate.view.color('maroon', 0.5);
+            this.switchGate.contents = config('switchGatesAfter').tileType;
+            this.switchGate.walkable = config('switchGatesAfter').walkable;
 
             return this;
         },
 
         setSwitchGate: function() {
             this.view.color('maroon');
-            this.contents = 'SwitchGate';
-            this.isOn = true;
+            this.contents = config('switchGatesBefore').tileType;
+            this.walkable = config('switchGatesBefore').walkable;
 
             return this;
         }
@@ -112,32 +113,43 @@ map = {
     // for now, we'll just use the current timestamp.
     newSeed: function() {
         if (config('mapSeed') == '') {
-            this.seed = Date.now();
+            // get random seed
+            this.seed = Srand.randomize();
         } else {
             this.seed = config('mapSeed');
+            Srand.seed(this.seed);
         }
 
-        // this.seed = 'hello';
-        // the above seed gets unsolvable at level 16.
-
         console.log('The seed is: "' + this.seed.toString() + '".');
-        this.rng = new Math.seedrandom(this.seed);
 
         return this;
     },
 
-    getRandomTile: function() {
+    getRandomTile: function(isWinGate) {
         var isTileOccupied = true;
+        var isTooClose = false;
+
+        // DONE: make WinGate not spawn too close to player
+        // good seed for testing is 1531171161
         
         // get random x, y coordinates to get a random tile
         // https://stackoverflow.com/a/4550514
-        while (isTileOccupied) {
-            var tileX = Math.floor(map.rng() * config('level').widthInTiles);
-            var tileY = Math.floor(map.rng() * config('level').heightInTiles);
+        while (isTileOccupied && !isTooClose) {
+            var tileX = Math.floor(Srand.random() * config('level').widthInTiles);
+            var tileY = Math.floor(Srand.random() * config('level').heightInTiles);
             var newTile = map.getTile(tileX, tileY);
 
-            // check if tile is empty
-            var isTileOccupied = newTile.contents != '';
+            if (!isWinGate) {
+                // check if tile is empty
+                isTileOccupied = newTile.contents != '';
+            } else {
+                var diffY = Math.abs(tileY - this.playerTile.y);
+                var diffX = Math.abs(tileX - this.playerTile.x);
+
+                var distance = diffY + diffX;
+
+                isTooClose = (distance > config('winGateProximity'));
+            }
         }
 
         return newTile;
