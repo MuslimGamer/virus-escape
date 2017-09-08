@@ -28,9 +28,9 @@ externs = {
   "minDistanceToGate": 3, // how many movements, at minimum, between the player and WinGate
 
   "switchGatesBefore": {
-    tileType: "WallTile",
+    tileType: "WallTile"
   },
   "switchGatesAfter": {
-    tileType: "",
+    tileType: ""
   }
 }
