@@ -18,7 +18,7 @@ Game = {
         var playerEntity = Crafty.e("Player").placeInRandomTile();
         map.playerTile = playerEntity.tile;
 
-        map.getRandomTile(true).setWinGate();
+        map.getRandomTile('WinGate').setWinGate();
 
         var dangerTilesNo = Game.levelNumber * config('dangerTilesPerLevel');
         for (var i = 0; i < dangerTilesNo; i++) {
@@ -29,8 +29,8 @@ Game = {
             } else if (config('allowInvincibleDangerTile')) {
                 var dangerTile = 'setStrongDangerTile';
             } else {
-                break
-            };
+                break;
+            }
 
             map.getRandomTile()[dangerTile]();
         }
@@ -49,7 +49,14 @@ Game = {
         if (config('playerHealth') > 0) {
             playerEntity.setHealthCounter(Crafty.e('HealthCounter'));
         }
-        
+
+        if (config('allowAntiVirusEntities')) {
+            var antiVirusNo = Math.floor(Game.levelNumber / config('levelsPerAntiVirus'));
+            for (i = 0; i < antiVirusNo; i++) {
+                Crafty.e('AntiVirus').placeInRandomTile('AntiVirus');
+            }
+        }
+
         if (config('timerSeconds') > 0) {
             Crafty.e('GameOverTimer').startTimer();
         }
@@ -62,7 +69,7 @@ Game = {
     },
 
     completeLevel: function() {
-        console.log('Level ' + Game.levelNumber.toString() + ' complete! ' + 
+        console.log('Level ' + Game.levelNumber.toString() + ' complete! ' +
                     'Starting level ' + (Game.levelNumber + 1).toString() + '.');
         Game.levelNumber += 1;
         this.cleanUp();

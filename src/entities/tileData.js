@@ -5,18 +5,16 @@ function tileData(x, y) {
         y: y,
 
         contents: '',
+        entity: '',
 
         enter: function(thing) {
-            this.contents = thing.nameInTile;
+            this.entity = thing.nameInTile;
 
             return this;
         },
 
-        leave: function() {
-            switch (config('walkedTileSetting')) {
-                case "open":
-                    this.contents = '';
-                    break;
+        leave: function(footPrint) {
+            switch (footPrint) {
                 case "closed":
                     this.contents = 'WallTile';
                     this.view.color('silver');
@@ -29,7 +27,11 @@ function tileData(x, y) {
                     this.contents = 'StrongDangerTile';
                     this.view.color('red');
                     break;
+                default:
+                    this.contents = '';
+                    break;
             }
+            this.entity = '';
 
             return this;
         },
@@ -90,6 +92,6 @@ function tileData(x, y) {
 
 
     };
-    
+
     return this.tileData;
 }

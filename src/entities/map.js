@@ -15,8 +15,31 @@ map = {
         }
     },
 
+    getPathToPlayer: function (startX, startY) {
+        var grid = this.getGrid();
+        var finder = new PF.AStarFinder();
 
-    // for now, we'll just use the current timestamp.
+        return finder.findPath(startX, startY, this.playerTile.x, this.playerTile.y, grid);
+    },
+
+    // generate a grid representing the map, with 1 as blocked, and 0 as walkable
+    getGrid: function () {
+        var grid = new PF.Grid(this.widthInTiles, this.heightInTiles);
+
+        for (var y = 0; y < this.heightInTiles; y++) {
+            for (var x = 0; x < this.widthInTiles; x++) {
+                var tile = map.getTile(x, y);
+
+                if (tile.contents != '') {
+                    grid.setWalkableAt(x, y, false);
+                }
+            }
+        }
+
+        return grid;
+    },
+
+
     newSeed: function() {
         if (config('mapSeed') == '') {
             // get random seed
@@ -38,13 +61,13 @@ map = {
         return (diffY + diffX) + config('extraMoves');
     },
 
-    getRandomTile: function(isWinGate) {
+    getRandomTile: function(tileType) {
         var isTileOccupied = true;
         var isTooClose = false;
 
         // DONE: make WinGate not spawn too close to player
         // good seed for testing is 1531171161
-        
+
         // get random x, y coordinates to get a random tile
         // https://stackoverflow.com/a/4550514
         while (isTileOccupied || isTooClose) {
@@ -52,9 +75,9 @@ map = {
             var tileY = Math.floor(Srand.random() * config('level').heightInTiles);
             var newTile = map.getTile(tileX, tileY);
 
-            if (!isWinGate) {
+            if (!tileType) {
                 // check if tile is empty
-                isTileOccupied = newTile.contents != '';
+                isTileOccupied = newTile.contents != '' || newTile.entity != '';
             } else {
                 var diffY = Math.abs(tileY - this.playerTile.y);
                 var diffX = Math.abs(tileX - this.playerTile.x);
@@ -62,17 +85,17 @@ map = {
                 var distance = diffY + diffX;
 
                 isTooClose = (distance < config('minDistanceToGate'));
-                isTileOccupied = newTile.contents != '';
+                isTileOccupied = newTile.contents != '' || newTile.entity != '';
             }
         }
 
-        if (isWinGate) {
+        if (tileType == 'WinGate') {
             this.winGate = newTile;
         }
 
         return newTile;
     },
-    
+
     getTile: function(x, y) {
         return this.data[this.getKey(x, y)];
     },
