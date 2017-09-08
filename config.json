@@ -15,12 +15,12 @@ externs = {
   "playerHealth": 10,
   "dangerDamage": 5,
 
-  "allowAntiVirusEntities": true,
+  "allowAntiVirusEntities": false,
   "antiVirusMovementCost": 2,
   "antiVirusesPerLevel": 0.2,
 
   "allowTileScanning": {
-    "firstStage": true,
+    "firstStage": false,
     "secondStage": true
   },
 

@@ -65,9 +65,6 @@ map = {
         var isTileOccupied = true;
         var isTooClose = false;
 
-        // DONE: make WinGate not spawn too close to player
-        // good seed for testing is 1531171161
-
         // get random x, y coordinates to get a random tile
         // https://stackoverflow.com/a/4550514
         while (isTileOccupied || isTooClose) {
@@ -75,7 +72,7 @@ map = {
             var tileY = Math.floor(Srand.random() * config('level').heightInTiles);
             var newTile = map.getTile(tileX, tileY);
 
-            if (tileType == '') {
+            if (tileType == '' || tileType == 'Player') {
                 // check if tile is empty
                 isTileOccupied = newTile.contents != '' || newTile.entity != '';
             } else {

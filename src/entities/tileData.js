@@ -68,6 +68,8 @@ function tileData(x, y) {
             this.contents = 'Switch';
             this.isOn = true;
             this.switchGate = switchGate;
+            this.numberTag = switchGate.numberTag;
+            this.view.addNumberTag(this.numberTag);
 
             return this;
         },
@@ -85,9 +87,11 @@ function tileData(x, y) {
             return this;
         },
 
-        setSwitchGate: function() {
+        setSwitchGate: function(numberTag) {
             this.view.color('purple');
             this.contents = config('switchGatesBefore').tileType;
+            this.numberTag = numberTag;
+            this.view.addNumberTag(this.numberTag);
 
             return this;
         },

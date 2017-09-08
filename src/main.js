@@ -15,7 +15,7 @@ Game = {
         map.init(config("level").widthInTiles, config("level").heightInTiles);
         Crafty.e("Level").loadMap(map);
 
-        var playerEntity = Crafty.e("Player").placeInRandomTile();
+        var playerEntity = Crafty.e("Player").placeInRandomTile('Player');
         map.playerTile = playerEntity.tile;
 
         map.getRandomTile('WinGate').setWinGate();
@@ -37,7 +37,7 @@ Game = {
 
         var switchGateNo = Math.floor((Game.levelNumber/2) + 1) * config('switchGatesPerLevel');
         for (var i = 0; i < switchGateNo; i++) {
-            var switchGate = map.getRandomTile().setSwitchGate();
+            var switchGate = map.getRandomTile().setSwitchGate(i);
             map.getRandomTile().setSwitch(switchGate);
         }
 
