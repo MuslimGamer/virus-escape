@@ -22,13 +22,15 @@ Game = {
 
         var dangerTilesNo = Game.levelNumber * config('dangerTilesPerLevel');
         for (var i = 0; i < dangerTilesNo; i++) {
-            if (config('allowWeakDangerTile') && config('allowStrongDangerTile')) {
+            if (config('allowWeakDangerTile') && config('allowInvincibleDangerTile')) {
                 var dangerTile = Srand.choice(['setWeakDangerTile', 'setStrongDangerTile']);
-            } 
-            else if (config('allowWeakDangerTile')) var dangerTile = 'setWeakDangerTile';
-            else if (config('allowStrongDangerTile')) var dangerTile = 'setStrongDangerTile';
-
-            else break;
+            } else if (config('allowWeakDangerTile')) {
+                var dangerTile = 'setWeakDangerTile';
+            } else if (config('allowInvincibleDangerTile')) {
+                var dangerTile = 'setStrongDangerTile';
+            } else {
+                break
+            };
 
             map.getRandomTile()[dangerTile]();
         }

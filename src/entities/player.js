@@ -15,24 +15,28 @@ Crafty.c('Player', {
     moved: function(newTile) {
         var tileType = newTile.contents;
 
-        if (tileType == 'WinGate') Game.completeLevel();
-
-        else if (tileType == 'WeakDangerTile') {
+        if (tileType == 'WinGate') {
+            Game.completeLevel();
+        } else if (tileType == 'WeakDangerTile') {
             this.health -= config('dangerDamage');
             this.healthCounter.setHealth(this.health);
 
-            if (this.health <= 0) Game.loseLevel();
+            if (this.health <= 0) {
+                Game.loseLevel();
+            }
         } 
 
-        else if (tileType == 'StrongDangerTile') Game.loseLevel();
-
-        else if (tileType == 'Switch' && newTile.isOn == true) { 
+        else if (tileType == 'StrongDangerTile') {
+            Game.loseLevel();
+        } else if (tileType == 'Switch' && newTile.isOn == true) { 
             newTile.activate();
         }
 
         if (config('limitedMoves')) {
-            if (this.moves < 1) Game.loseLevel();
             this.moves -= 1;
+            if (this.moves < 0) {
+                Game.loseLevel();
+            }
             this.moveCounter.setMoves(this.moves);
         }
     },

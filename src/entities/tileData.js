@@ -21,9 +21,13 @@ function tileData(x, y) {
                     this.contents = 'WallTile';
                     this.view.color('silver');
                     break;
-                case "closed-deadly":
+                case "closed-damaging":
                     this.contents = 'WeakDangerTile';
-                    this.view.color('silver');
+                    this.view.color('#FF6969') // pink
+                    break;
+                case "closed-deadly":
+                    this.contents = 'StrongDangerTile';
+                    this.view.color('red');
                     break;
             }
 
@@ -37,14 +41,14 @@ function tileData(x, y) {
         },
 
         setWeakDangerTile: function() {
-            this.view.color('red');
+            this.view.color('#FF6969'); // pink
             this.contents = 'WeakDangerTile';
 
             return this;
         },
 
         setStrongDangerTile: function() {
-            this.view.color('maroon');
+            this.view.color('red');
             this.contents = 'StrongDangerTile';
         },
 
