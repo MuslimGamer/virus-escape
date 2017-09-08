@@ -19,14 +19,29 @@ externs = {
   "antiVirusMovementCost": 2,
   "antiVirusesPerLevel": 0.2,
 
+  "allowTileScanning": {
+    "firstStage": true,
+    "secondStage": true
+  },
+
+  "tileScanningRate": 5, //i.e: one tile scanned every x seconds
+  "finishScanningRate": 5, //i.e: after it starts scanning, wait x seconds before setting it to finished
+
+  "scanTile": {
+    "firstColor": "orange",
+    "firstEffect": "WallTile",
+    "secondColor": "red",
+    "secondEffect": "StrongDangerTile"
+  },
+
   "allowWeakDangerTile": true,
   "allowInvincibleDangerTile": true,
 
   "dangerTilesPerLevel": 1, // multiplier for danger tiles. increment sparingly. zero to disable
   "switchGatesPerLevel": 1, // multiplier for switch gates. increment sparingly. zero to disable
 
-  "walkedTileSetting": "open", // open: walkable more than once. closed: walkable once - not deadly.
-  "walkedTileByVirus": "closed", // closed-damaging: walkable once - damaging. closed-deadly: walkable once - deadly
+  "walkedTileSetting": "open", // (open): walkable more than once | (closed): walkable once - not deadly.
+  "walkedTileByAntiVirus": "closed", // (closed-damaging): walkable once - damaging | (closed-deadly): walkable once - deadly
 
   "mapSeed": "1531171161", // seed for generating the map
 

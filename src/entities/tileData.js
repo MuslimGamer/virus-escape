@@ -52,6 +52,8 @@ function tileData(x, y) {
         setStrongDangerTile: function() {
             this.view.color('red');
             this.contents = 'StrongDangerTile';
+
+            return this;
         },
 
         setWinGate: function() {
@@ -88,9 +90,22 @@ function tileData(x, y) {
             this.contents = config('switchGatesBefore').tileType;
 
             return this;
+        },
+
+        setScanTile: function () {
+            this.view.color(config('scanTile').firstColor);
+            this.contents = config('scanTile').firstEffect;
+            this.scanProgress = 0;
+
+            return this;
+        },
+
+        setScannedTile: function () {
+            this.view.color(config('scanTile').secondColor);
+            this.contents = config('scanTile').secondEffect;
+
+            return this;
         }
-
-
     };
 
     return this.tileData;

@@ -15,7 +15,7 @@ Crafty.c('AntiVirus', {
         }
         var tile = map.getTile(path[0], path[1]); // get tile from map
 
-        this.tile.leave('');
+        this.tile.leave(config('walkedTileByAntiVirus'));
         this.moveTo(tile);
     }
 });

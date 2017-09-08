@@ -48,6 +48,10 @@ Crafty.c('Player', {
                 Crafty.trigger('AntiVirusMove');
             }
         }
+
+        if (config('allowTileScanning').firstStage) {
+            Crafty.trigger('ScanTile');
+        }
     },
 
     setMoveCounter: function(moveCounter) {
