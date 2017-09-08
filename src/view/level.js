@@ -40,7 +40,7 @@ Crafty.c('Level', {
             for (i = 0; i < this.scanningTilesArray.length; i++) {
                 scanningTile = this.scanningTilesArray[i];
                 scanningTile.scanProgress += 1;
-                if (scanningTile.scanProgress > config('finishScanningRate')) {
+                if (scanningTile.scanProgress > config('scansUntilComplete')) {
                     var index = this.scanningTilesArray.indexOf(scanningTile);
                     this.scanningTilesArray.splice(index, 1);
 
@@ -51,7 +51,7 @@ Crafty.c('Level', {
         this.scanCounter += 1;
         if (this.scanCounter > config('tileScanningRate')) {
             this.scanCounter = 0;
-            var tile = map.getRandomTile().setScanTile();
+            var tile = map.getRandomTile().setScanningTile();
             this.scanningTilesArray.push(tile);
         }
     }

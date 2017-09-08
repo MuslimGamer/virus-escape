@@ -96,7 +96,7 @@ function tileData(x, y) {
             return this;
         },
 
-        setScanTile: function () {
+        setScanningTile: function () {
             this.view.color(config('scanTile').firstColor);
             this.contents = config('scanTile').firstEffect;
             this.scanProgress = 0;
