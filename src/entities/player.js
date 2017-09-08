@@ -6,10 +6,11 @@ Crafty.c('Player', {
             .bind('KeyDown', this.moving);
 
         this.bind('PlayerMoved', this.moved);
-        
+
         this.nameInTile = 'Player';
 
         this.health = config('playerHealth');
+        this.antiVirusMovePoints = 0;
     },
 
     moved: function(newTile) {
@@ -24,7 +25,7 @@ Crafty.c('Player', {
             if (this.health <= 0) {
                 Game.loseLevel();
             }
-        } 
+        }
 
         else if (tileType == 'StrongDangerTile') {
             Game.loseLevel();
@@ -39,11 +40,23 @@ Crafty.c('Player', {
             }
             this.moveCounter.setMoves(this.moves);
         }
+
+        if (config('allowAntiVirusEntities')) {
+            this.antiVirusMoveCounter += 1;
+            if (this.antiVirusMoveCounter > config('antiVirusMovementCost')) {
+                this.antiVirusMoveCounter = 0;
+                Crafty.trigger('AntiVirusMove');
+            }
+        }
+
+        if (config('allowTileScanning').firstStage) {
+            Crafty.trigger('ScanTile');
+        }
     },
 
     setMoveCounter: function(moveCounter) {
         this.moveCounter = moveCounter;
-        
+
         return this;
     },
 
@@ -90,14 +103,15 @@ Crafty.c('Player', {
         }
 
         var newTile = map.getTile(x, y);
-        
+
         if (newTile == null || newTile.contents == 'WallTile' || newTile == this.tile) {
             return;
         }
         Crafty.trigger('PlayerMoved', newTile);
 
         // handle removing player from tile's contents array
-        this.tile.leave();
+        this.tile.leave(config('walkedTileSetting'));
         this.moveTo(newTile);
+        map.playerTile = this.tile;
     }
 });

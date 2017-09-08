@@ -5,18 +5,16 @@ function tileData(x, y) {
         y: y,
 
         contents: '',
+        entity: '',
 
         enter: function(thing) {
-            this.contents = thing.nameInTile;
+            this.entity = thing.nameInTile;
 
             return this;
         },
 
-        leave: function() {
-            switch (config('walkedTileSetting')) {
-                case "open":
-                    this.contents = '';
-                    break;
+        leave: function(footPrint) {
+            switch (footPrint) {
                 case "closed":
                     this.contents = 'WallTile';
                     this.view.color('silver');
@@ -29,7 +27,11 @@ function tileData(x, y) {
                     this.contents = 'StrongDangerTile';
                     this.view.color('red');
                     break;
+                default:
+                    this.contents = '';
+                    break;
             }
+            this.entity = '';
 
             return this;
         },
@@ -50,6 +52,8 @@ function tileData(x, y) {
         setStrongDangerTile: function() {
             this.view.color('red');
             this.contents = 'StrongDangerTile';
+
+            return this;
         },
 
         setWinGate: function() {
@@ -64,6 +68,8 @@ function tileData(x, y) {
             this.contents = 'Switch';
             this.isOn = true;
             this.switchGate = switchGate;
+            this.numberTag = switchGate.numberTag;
+            this.view.addNumberTag(this.numberTag);
 
             return this;
         },
@@ -81,15 +87,30 @@ function tileData(x, y) {
             return this;
         },
 
-        setSwitchGate: function() {
+        setSwitchGate: function(numberTag) {
             this.view.color('purple');
             this.contents = config('switchGatesBefore').tileType;
+            this.numberTag = numberTag;
+            this.view.addNumberTag(this.numberTag);
+
+            return this;
+        },
+
+        setScanningTile: function () {
+            this.view.color(config('scanTile').firstColor);
+            this.contents = config('scanTile').firstEffect;
+            this.scanProgress = 0;
+
+            return this;
+        },
+
+        setScannedTile: function () {
+            this.view.color(config('scanTile').secondColor);
+            this.contents = config('scanTile').secondEffect;
 
             return this;
         }
-
-
     };
-    
+
     return this.tileData;
 }

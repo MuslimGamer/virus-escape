@@ -1,12 +1,17 @@
 // Level: the thing you see on the screen. Uses a map for data.
 Crafty.c('Level', {
     init: function() {
-        this.requires("Actor");
+        this.requires("Actor")
+            .color("#000088")
+            .size(config("level").widthInTiles * paddedWidth, config("level").heightInTiles * paddedHeight);
         var paddedWidth = config("tileSize") + config("padding");
         var paddedHeight = config("tileSize") + config("padding");
 
-        this.color("#000088")
-            .size(config("level").widthInTiles * paddedWidth, config("level").heightInTiles * paddedHeight);
+        if (config('allowTileScanning').firstStage) {
+            this.scanCounter = 0;
+            this.bind('ScanTile', this.scanTile);
+            this.scanningTilesArray = [];
+        }
     },
 
     loadMap: function(map) {
@@ -27,6 +32,27 @@ Crafty.c('Level', {
                 // map the Crafty tile to the map object, instead of the normal data class.
                 tileData.setView(mapTile);
             }
+        }
+    },
+
+    scanTile: function () {
+        if (config('allowTileScanning').secondStage) {
+            for (i = 0; i < this.scanningTilesArray.length; i++) {
+                scanningTile = this.scanningTilesArray[i];
+                scanningTile.scanProgress += 1;
+                if (scanningTile.scanProgress > config('scansUntilComplete')) {
+                    var index = this.scanningTilesArray.indexOf(scanningTile);
+                    this.scanningTilesArray.splice(index, 1);
+
+                    scanningTile.setScannedTile();
+                }
+            }
+        }
+        this.scanCounter += 1;
+        if (this.scanCounter > config('tileScanningRate')) {
+            this.scanCounter = 0;
+            var tile = map.getRandomTile().setScanningTile();
+            this.scanningTilesArray.push(tile);
         }
     }
 });

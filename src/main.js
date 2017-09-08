@@ -15,10 +15,10 @@ Game = {
         map.init(config("level").widthInTiles, config("level").heightInTiles);
         Crafty.e("Level").loadMap(map);
 
-        var playerEntity = Crafty.e("Player").placeInRandomTile();
+        var playerEntity = Crafty.e("Player").placeInRandomTile('Player');
         map.playerTile = playerEntity.tile;
 
-        map.getRandomTile(true).setWinGate();
+        map.getRandomTile('WinGate').setWinGate();
 
         var dangerTilesNo = Game.levelNumber * config('dangerTilesPerLevel');
         for (var i = 0; i < dangerTilesNo; i++) {
@@ -29,15 +29,15 @@ Game = {
             } else if (config('allowInvincibleDangerTile')) {
                 var dangerTile = 'setStrongDangerTile';
             } else {
-                break
-            };
+                break;
+            }
 
             map.getRandomTile()[dangerTile]();
         }
 
         var switchGateNo = Math.floor((Game.levelNumber/2) + 1) * config('switchGatesPerLevel');
         for (var i = 0; i < switchGateNo; i++) {
-            var switchGate = map.getRandomTile().setSwitchGate();
+            var switchGate = map.getRandomTile().setSwitchGate(i);
             map.getRandomTile().setSwitch(switchGate);
         }
 
@@ -49,7 +49,14 @@ Game = {
         if (config('playerHealth') > 0) {
             playerEntity.setHealthCounter(Crafty.e('HealthCounter'));
         }
-        
+
+        if (config('allowAntiVirusEntities')) {
+            var numAntiViruses = Math.floor(Game.levelNumber * config('antiVirusesPerLevel'));
+            for (i = 0; i < numAntiViruses; i++) {
+                Crafty.e('AntiVirus').placeInRandomTile('AntiVirus');
+            }
+        }
+
         if (config('timerSeconds') > 0) {
             Crafty.e('GameOverTimer').startTimer();
         }
@@ -62,7 +69,7 @@ Game = {
     },
 
     completeLevel: function() {
-        console.log('Level ' + Game.levelNumber.toString() + ' complete! ' + 
+        console.log('Level ' + Game.levelNumber.toString() + ' complete! ' +
                     'Starting level ' + (Game.levelNumber + 1).toString() + '.');
         Game.levelNumber += 1;
         this.cleanUp();

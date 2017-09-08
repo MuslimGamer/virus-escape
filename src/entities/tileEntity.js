@@ -13,27 +13,14 @@ Crafty.c('TileEntity', {
         this.tile = newTile;
         newTile.enter(this);
 
-        this.move(newTile.x * (config("tileSize") + config("padding")) + config("padding") * 2, 
+        this.move(newTile.x * (config("tileSize") + config("padding")) + config("padding") * 2,
                   newTile.y * (config("tileSize") + config("padding")) + config("padding") * 2);
 
         return this;
     },
 
-    placeInRandomTile: function() {
-        var isTileOccupied = true;
-        
-        // get random x, y coordinates to get a random tile
-        // https://stackoverflow.com/a/4550514
-        while (isTileOccupied) {
-            var tileX = Math.floor(Srand.random() * config('level').widthInTiles);
-            var tileY = Math.floor(Srand.random() * config('level').heightInTiles);
-            var newTile = map.getTile(tileX, tileY);
-
-            // check if tile is empty
-            var isTileOccupied = newTile.contents != '';
-        }
-
-        this.moveTo(newTile);
+    placeInRandomTile: function(tileType) {
+        this.moveTo(map.getRandomTile(tileType));
 
         return this;
     }
