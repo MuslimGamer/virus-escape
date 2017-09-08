@@ -1,9 +1,8 @@
 // GameOverTimer: the configurable time limit for completing the level.
 Crafty.c('GameOverTimer', {
     init: function() {
-        this.requires('Common, Canvas, Text')
-            .textColor('white')
-            .textFont({size: '20px'});
+        this.requires('Text2')
+            .textColor('white');
     },
 
     timerTick: function() {

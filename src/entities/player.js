@@ -8,6 +8,8 @@ Crafty.c('Player', {
         this.bind('PlayerMoved', this.moved);
         
         this.nameInTile = 'Player';
+
+        this.health = config('playerHealth');
     },
 
     moved: function(newTile) {
@@ -15,11 +17,46 @@ Crafty.c('Player', {
 
         if (tileType == 'WinGate') {
             Game.completeLevel();
-        } else if (tileType == 'DangerTile') {
+        } else if (tileType == 'WeakDangerTile') {
+            this.health -= config('dangerDamage');
+            this.healthCounter.setHealth(this.health);
+
+            if (this.health <= 0) {
+                Game.loseLevel();
+            }
+        } 
+
+        else if (tileType == 'StrongDangerTile') {
             Game.loseLevel();
         } else if (tileType == 'Switch' && newTile.isOn == true) { 
             newTile.activate();
         }
+
+        if (config('limitedMoves')) {
+            this.moves -= 1;
+            if (this.moves < 0) {
+                Game.loseLevel();
+            }
+            this.moveCounter.setMoves(this.moves);
+        }
+    },
+
+    setMoveCounter: function(moveCounter) {
+        this.moveCounter = moveCounter;
+        
+        return this;
+    },
+
+    setHealthCounter: function(healthCounter) {
+        this.healthCounter = healthCounter;
+        this.healthCounter.setHealth(this.health);
+    },
+
+    setMoveLimit: function(moveLimit) {
+        this.moves = moveLimit + config('extraMoves');
+        this.moveCounter.setMoves(this.moves);
+
+        return this;
     },
 
     moving: function(e) {
@@ -54,7 +91,7 @@ Crafty.c('Player', {
 
         var newTile = map.getTile(x, y);
         
-        if (newTile == null || newTile.walkable == false || newTile == this.tile) {
+        if (newTile == null || newTile.contents == 'WallTile' || newTile == this.tile) {
             return;
         }
         Crafty.trigger('PlayerMoved', newTile);

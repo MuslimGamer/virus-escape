@@ -1,28 +1,36 @@
 externs = {
-    "level": {
-        // size in tiles
-        "widthInTiles": 8,
-        "heightInTiles": 8
-    },
+  "level": {
+    // size in tiles
+    "widthInTiles": 8,
+    "heightInTiles": 8
+  },
 
-    "tileSize": 64, // tiles are 32x32px
-    "padding": 8,
-    "timerSeconds": 10, // set to 0 to disable
+  "tileSize": 64, // tiles are 32x32px
+  "padding": 8,
 
-    "dangerTilesPerLevel": 1, // multiplier for danger tiles. increment sparingly. zero to disable
-    "switchGatesPerLevel": 1, // multiplier for switch gates. increment sparingly. zero to disable
+  "timerSeconds": 0, // set to 0 to disable
+  "limitedMoves": true,
+  "extraMoves": 3, // added to the generated number.
 
-    "walkedTileSetting": "open", // open: walkable more than once. closed: walkable once - not deadly. closed-deadly: walkable once - deadly
-    "mapSeed": "1531171161", // seed for generating the map
+  "playerHealth": 10,
+  "dangerDamage": 5,
 
-    "minDistanceToGate": 3, // how many movements, at minimum, between the player and WinGate
+  "allowWeakDangerTile": true,
+  "allowInvincibleDangerTile": true,
 
-    "switchGatesBefore": {
-        tileType: "SwitchGate", // set to SwitchGate to disable danger or DangerTile to enable danger
-        walkable: false
-    },
-    "switchGatesAfter": {
-        tileType: "SwitchGate",
-        walkable: true
-    }
+  "dangerTilesPerLevel": 1, // multiplier for danger tiles. increment sparingly. zero to disable
+  "switchGatesPerLevel": 1, // multiplier for switch gates. increment sparingly. zero to disable
+
+  "walkedTileSetting": "open", // open: walkable more than once. closed: walkable once - not deadly. 
+                               // closed-damaging: walkable once - damaging. closed-deadly: walkable once - deadly
+  "mapSeed": "1531171161", // seed for generating the map
+
+  "minDistanceToGate": 3, // how many movements, at minimum, between the player and WinGate
+
+  "switchGatesBefore": {
+    tileType: "WallTile",
+  },
+  "switchGatesAfter": {
+    tileType: "",
+  }
 }
