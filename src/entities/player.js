@@ -10,7 +10,7 @@ Crafty.c('Player', {
         this.nameInTile = 'Player';
 
         this.health = config('playerHealth');
-        this.antiVirusMoveCounter = 0;
+        this.antiVirusMovePoints = 0;
     },
 
     moved: function(newTile) {
@@ -43,7 +43,7 @@ Crafty.c('Player', {
 
         if (config('allowAntiVirusEntities')) {
             this.antiVirusMoveCounter += 1;
-            if (this.antiVirusMoveCounter > config('antiVirusMovement')) {
+            if (this.antiVirusMoveCounter > config('antiVirusMovementCost')) {
                 this.antiVirusMoveCounter = 0;
                 Crafty.trigger('AntiVirusMove');
             }

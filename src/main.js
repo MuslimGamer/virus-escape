@@ -51,8 +51,8 @@ Game = {
         }
 
         if (config('allowAntiVirusEntities')) {
-            var antiVirusNo = Math.floor(Game.levelNumber / config('levelsPerAntiVirus'));
-            for (i = 0; i < antiVirusNo; i++) {
+            var numAntiViruses = Math.floor(Game.levelNumber * config('antiVirusesPerLevel'));
+            for (i = 0; i < numAntiViruses; i++) {
                 Crafty.e('AntiVirus').placeInRandomTile('AntiVirus');
             }
         }
