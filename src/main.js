@@ -20,7 +20,7 @@ Game = {
 
         map.getRandomTile('WinGate').setWinGate();
 
-        var dangerTilesNo = Game.levelNumber * config('dangerTilesPerLevel');
+        var dangerTilesNo = Math.floor(Game.levelNumber * config('dangerTilesPerLevel'));
         for (var i = 0; i < dangerTilesNo; i++) {
             if (config('allowWeakDangerTile') && config('allowInvincibleDangerTile')) {
                 var dangerTile = Srand.choice(['setWeakDangerTile', 'setStrongDangerTile']);
@@ -39,6 +39,11 @@ Game = {
         for (var i = 0; i < switchGateNo; i++) {
             var switchGate = map.getRandomTile().setSwitchGate(i);
             map.getRandomTile().setSwitch(switchGate);
+        }
+
+        var numWallTiles = Math.floor(Game.levelNumber * config('wallTilesPerLevel'));
+        for (var i = 0; i < numWallTiles; i++) {
+            map.getRandomTile().setWallTile();
         }
 
         if (config('limitedMoves')) {
