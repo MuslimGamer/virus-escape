@@ -9,6 +9,7 @@ function tileData(x, y) {
 
         enter: function(thing) {
             this.entity = thing.nameInTile;
+            this.entityView = thing;
 
             return this;
         },
@@ -21,14 +22,11 @@ function tileData(x, y) {
                     break;
                 case "closed-damaging":
                     this.contents = 'WeakDangerTile';
-                    this.view.color('#FF6969') // pink
+                    this.view.color('#FF6969'); // pink
                     break;
                 case "closed-deadly":
                     this.contents = 'StrongDangerTile';
                     this.view.color('red');
-                    break;
-                default:
-                    this.contents = '';
                     break;
             }
             this.entity = '';
@@ -109,6 +107,16 @@ function tileData(x, y) {
             this.contents = config('scanTile').secondEffect;
 
             return this;
+        },
+
+        setWallTile: function() {
+            this.view.color('silver');
+            this.contents = 'WallTile';
+        },
+
+        destroyEntity: function() {
+            this.entity = '';
+            this.entityView.die();
         }
     };
 

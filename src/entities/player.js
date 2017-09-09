@@ -12,6 +12,14 @@ Crafty.c('Player', {
         this.health = config('playerHealth');
         this.antiVirusMovePoints = 0;
     },
+    
+    reduceHealth: function(damage) {
+        this.health -= damage;
+        this.healthCounter.setHealth(this.health);
+        if (this.health <= 0) {
+            Game.loseLevel();
+        }
+    },
 
     moved: function(newTile) {
         var tileType = newTile.contents;
@@ -19,18 +27,13 @@ Crafty.c('Player', {
         if (tileType == 'WinGate') {
             Game.completeLevel();
         } else if (tileType == 'WeakDangerTile') {
-            this.health -= config('dangerDamage');
-            this.healthCounter.setHealth(this.health);
-
-            if (this.health <= 0) {
-                Game.loseLevel();
-            }
-        }
-
-        else if (tileType == 'StrongDangerTile') {
+            this.reduceHealth(config('dangerDamage'));
+        } else if (tileType == 'StrongDangerTile') {
             Game.loseLevel();
         } else if (tileType == 'Switch' && newTile.isOn == true) { 
             newTile.activate();
+        } else if (newTile.entity == 'AntiVirus') {
+            newTile.destroyEntity();
         }
 
         if (config('limitedMoves')) {
@@ -41,10 +44,12 @@ Crafty.c('Player', {
             this.moveCounter.setMoves(this.moves);
         }
 
+        this.moveTo(newTile);
+
         if (config('allowAntiVirusEntities')) {
-            this.antiVirusMoveCounter += 1;
-            if (this.antiVirusMoveCounter > config('antiVirusMovementCost')) {
-                this.antiVirusMoveCounter = 0;
+            this.antiVirusMovePoints += 1;
+            if (this.antiVirusMovePoints > config('antiVirusMovementCost')) {
+                this.antiVirusMovePoints = 0;
                 Crafty.trigger('AntiVirusMove');
             }
         }
@@ -107,11 +112,9 @@ Crafty.c('Player', {
         if (newTile == null || newTile.contents == 'WallTile' || newTile == this.tile) {
             return;
         }
-        Crafty.trigger('PlayerMoved', newTile);
-
         // handle removing player from tile's contents array
         this.tile.leave(config('walkedTileSetting'));
-        this.moveTo(newTile);
+        Crafty.trigger('PlayerMoved', newTile);
         map.playerTile = this.tile;
     }
 });
