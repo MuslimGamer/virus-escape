@@ -1,8 +1,8 @@
 externs = {
   "level": {
     // size in tiles
-    "widthInTiles": 19,
-    "heightInTiles": 9
+    "widthInTiles": 8,
+    "heightInTiles": 8
   },
 
   "tileSize": 64, // tiles are 32x32px
@@ -38,9 +38,9 @@ externs = {
   "allowWeakDangerTile": true,
   "allowInvincibleDangerTile": true,
   
-  "wallTilesPerLevel": 5,
-  "dangerTilesPerLevel": 1, // multiplier for danger tiles. increment sparingly. zero to disable
-  "switchGatesPerLevel": 5, // multiplier for switch gates. increment sparingly. zero to disable
+  "wallTilesPerLevel": 2,
+  "dangerTilesPerLevel": 2, // multiplier for danger tiles. increment sparingly. zero to disable
+  "switchGatesPerLevel": 2, // multiplier for switch gates. increment sparingly. zero to disable
 
   "walkedTileSetting": "open", // (open): walkable more than once | (closed): walkable once - not deadly.
   "walkedTileByAntiVirus": "closed", // (closed-damaging): walkable once - damaging | (closed-deadly): walkable once - deadly
