@@ -14,7 +14,7 @@ function tileData(x, y) {
             return this;
         },
 
-        leave: function(footPrint) {
+        leave: function(footPrint, isVirus) {
             switch (footPrint) {
                 case "closed":
                     this.contents = 'WallTile';
@@ -30,6 +30,16 @@ function tileData(x, y) {
                     break;
             }
             this.entity = '';
+            if (isVirus) {
+                this.footprintFade = 0;
+            }
+
+            return this;
+        },
+
+        resetTile: function () {
+            this.view.color('blue');
+            this.contents = '';
 
             return this;
         },
@@ -94,18 +104,27 @@ function tileData(x, y) {
             return this;
         },
 
-        setScanningTile: function () {
-            this.view.color(config('scanTile').firstColor);
-            this.contents = config('scanTile').firstEffect;
+        setScanningTile: function (stage) {
+            switch (stage) {
+                case 1:
+                    this.view.color(config('scanTile').firstColor);
+                    this.contents = config('scanTile').firstEffect;
+                    break;
+                case 2:
+                    this.view.color(config('scanTile').secondColor);
+                    this.contents = config('scanTile').secondEffect;
+                    break;
+                case 3:
+                    this.view.color(config('scanTile').thirdColor);
+                    this.contents = config('scanTile').thirdEffect;
+                    break;
+                case 4:
+                    this.view.color('blue');
+                    this.contents = '';
+                    break;
+            }
             this.scanProgress = 0;
-
-            return this;
-        },
-
-        setScannedTile: function () {
-            this.view.color(config('scanTile').secondColor);
-            this.contents = config('scanTile').secondEffect;
-
+            
             return this;
         },
 

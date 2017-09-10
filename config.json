@@ -1,8 +1,8 @@
 externs = {
   "level": {
     // size in tiles
-    "widthInTiles": 19,
-    "heightInTiles": 9
+    "widthInTiles": 8,
+    "heightInTiles": 8
   },
 
   "tileSize": 64, // tiles are 32x32px
@@ -17,37 +17,43 @@ externs = {
   "antiVirusDamage": 5,
 
   "allowAntiVirusEntities": true,
-  "antiVirusMovementCost": 2,
+  "antiVirusMovementCost": 1,
   "antiVirusesPerLevel": 1,
 
   "allowTileScanning": {
+    "all": true,
     "firstStage": true,
-    "secondStage": true
+    "secondStage": true,
+    "thirdStage": true,
+    "resetTiles": true
   },
 
-  "tileScanningRate": 5, //i.e: one tile scanned every x seconds
-  "scansUntilComplete": 5, //i.e: after it starts scanning, wait x seconds before setting it to finished
+  "tileScanningRate": 1, //i.e: one tile scanned every x seconds
+  "scansUntilComplete": 1, //i.e: after it starts scanning, wait x seconds before setting it to finished
 
   "scanTile": {
     "firstColor": "orange",
     "firstEffect": "WallTile",
     "secondColor": "red",
-    "secondEffect": "StrongDangerTile"
+    "secondEffect": "StrongDangerTile",
+    "thirdColor": "#FF6969",
+    "thirdEffect": "WeakDangerTile"
   },
 
   "allowWeakDangerTile": true,
   "allowInvincibleDangerTile": true,
-  
-  "wallTilesPerLevel": 5,
-  "dangerTilesPerLevel": 1, // multiplier for danger tiles. increment sparingly. zero to disable
-  "switchGatesPerLevel": 5, // multiplier for switch gates. increment sparingly. zero to disable
+
+  "wallTilesPerLevel": 2,
+  "dangerTilesPerLevel": 2, // multiplier for danger tiles. increment sparingly. zero to disable
+  "switchGatesPerLevel": 2, // multiplier for switch gates. increment sparingly. zero to disable
 
   "walkedTileSetting": "open", // (open): walkable more than once | (closed): walkable once - not deadly.
   "walkedTileByAntiVirus": "closed", // (closed-damaging): walkable once - damaging | (closed-deadly): walkable once - deadly
+  "antiVirusTailLength": 4, // 0 to disable fading footprints
 
   "mapSeed": "", // seed for generating the map
 
-  "minDistanceToGate": 10, // how many movements, at minimum, between the player and WinGate
+  "minDistanceToGate": 3, // how many movements, at minimum, between the player and WinGate
 
   "switchGatesBefore": {
     "tileType": "WallTile"
