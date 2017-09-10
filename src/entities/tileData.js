@@ -14,7 +14,7 @@ function tileData(x, y) {
             return this;
         },
 
-        leave: function(footPrint) {
+        leave: function(footPrint, isVirus) {
             switch (footPrint) {
                 case "closed":
                     this.contents = 'WallTile';
@@ -30,6 +30,16 @@ function tileData(x, y) {
                     break;
             }
             this.entity = '';
+            if (isVirus) {
+                this.footprintFade = 0;
+            }
+
+            return this;
+        },
+
+        resetTile: function () {
+            this.view.color('blue');
+            this.contents = '';
 
             return this;
         },
