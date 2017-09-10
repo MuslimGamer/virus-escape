@@ -7,10 +7,23 @@ Crafty.c('Level', {
         var paddedWidth = config("tileSize") + config("padding");
         var paddedHeight = config("tileSize") + config("padding");
 
-        if (config('allowTileScanning').firstStage) {
+        for (var key in config('allowTileScanning')) {
+            var value = config('allowTileScanning')[key];
+            if (value === true) {
+                var scanTiles = true;
+                break;
+            }
+        }
+
+        if (scanTiles) {
             this.scanCounter = 0;
-            this.bind('ScanTile', this.scanTile);
-            this.scanningTilesArray = [];
+            this.bind('TickEvent', this.tickEvent);
+            this.scanningTiles2 = [];
+            this.scanningTiles3 = [];
+            this.scanningTiles4 = [];
+        }
+        if (config('allowAntiVirusEntities')) {
+            this.antiVirusMovePoints = 0;
         }
     },
 
@@ -35,24 +48,76 @@ Crafty.c('Level', {
         }
     },
 
-    scanTile: function () {
-        if (config('allowTileScanning').secondStage) {
-            for (i = 0; i < this.scanningTilesArray.length; i++) {
-                scanningTile = this.scanningTilesArray[i];
-                scanningTile.scanProgress += 1;
-                if (scanningTile.scanProgress > config('scansUntilComplete')) {
-                    var index = this.scanningTilesArray.indexOf(scanningTile);
-                    this.scanningTilesArray.splice(index, 1);
+    tickEvent: function () {
+        if (config('allowAntiVirusEntities')) {
+            this.antiVirusMovePoints += 1;
+            if (this.antiVirusMovePoints >= config('antiVirusMovementCost')) {
+                this.antiVirusMovePoints = 0;
+                Crafty.trigger('AntiVirusMove');
+            }
+        }
 
-                    scanningTile.setScannedTile();
+        if (config('allowTileScanning').all) {
+            this.scanTile();
+        }
+    },
+
+    scanTile: function () {
+        var conf = config('allowTileScanning');
+        if (conf.resetTiles || conf.all) {
+            for (var i = 0; i < this.scanningTiles4.length; i++) {
+                var scanningTile = this.scanningTiles4[i];
+                scanningTile.scanProgress += 1;
+                if (scanningTile.scanProgress >= config('scansUntilComplete')) {
+                    var index = this.scanningTiles4.indexOf(scanningTile);
+                    this.scanningTiles4.splice(index, 1);
+
+                    scanningTile.setScanningTile(4);
                 }
             }
         }
-        this.scanCounter += 1;
-        if (this.scanCounter > config('tileScanningRate')) {
-            this.scanCounter = 0;
-            var tile = map.getRandomTile().setScanningTile();
-            this.scanningTilesArray.push(tile);
+        if (conf.thirdStage || conf.all) {
+            for (var i = 0; i < this.scanningTiles3.length; i++) {
+                var scanningTile = this.scanningTiles3[i];
+                scanningTile.scanProgress += 1;
+                if (scanningTile.scanProgress >= config('scansUntilComplete')) {
+                    var index = this.scanningTiles3.indexOf(scanningTile);
+                    this.scanningTiles3.splice(index, 1);
+
+                    scanningTile.setScanningTile(3);
+
+                    if (conf.resetTiles) {
+                        this.scanningTiles4.push(scanningTile);
+                    }
+                }
+            }
+        }
+        if (conf.secondStage || conf.all) {
+            for (var i = 0; i < this.scanningTiles2.length; i++) {
+                var scanningTile = this.scanningTiles2[i];
+                scanningTile.scanProgress += 1;
+                if (scanningTile.scanProgress >= config('scansUntilComplete')) {
+                    var index = this.scanningTiles2.indexOf(scanningTile);
+                    this.scanningTiles2.splice(index, 1);
+
+                    scanningTile.setScanningTile(2);
+
+                    if (conf.thirdStage) {
+                        this.scanningTiles3.push(scanningTile);
+                    }
+                }
+            }
+        }
+        if (conf.firstStage || conf.all) {
+            this.scanCounter += 1;
+            if (this.scanCounter >= config('tileScanningRate')) {
+                this.scanCounter = 0;
+                var scanningTile = map.getRandomTile().setScanningTile(1);
+
+                if (conf.secondStage) {
+                    this.scanningTiles2.push(scanningTile);
+                }
+            }
         }
     }
 });

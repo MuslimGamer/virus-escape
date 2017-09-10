@@ -6,11 +6,8 @@ Crafty.c('Player', {
             .bind('KeyDown', this.moving);
 
         this.bind('PlayerMoved', this.moved);
-
         this.nameInTile = 'Player';
-
         this.health = config('playerHealth');
-        this.antiVirusMovePoints = 0;
     },
     
     reduceHealth: function(damage) {
@@ -46,17 +43,7 @@ Crafty.c('Player', {
 
         this.moveTo(newTile);
 
-        if (config('allowAntiVirusEntities')) {
-            this.antiVirusMovePoints += 1;
-            if (this.antiVirusMovePoints > config('antiVirusMovementCost')) {
-                this.antiVirusMovePoints = 0;
-                Crafty.trigger('AntiVirusMove');
-            }
-        }
-
-        if (config('allowTileScanning').firstStage) {
-            Crafty.trigger('ScanTile');
-        }
+        Crafty.trigger('TickEvent');
     },
 
     setMoveCounter: function(moveCounter) {
