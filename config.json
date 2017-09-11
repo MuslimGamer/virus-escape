@@ -51,7 +51,7 @@ externs = {
   "switchGatesPerLevel": 2, // multiplier for switch gates. increment sparingly. zero to disable
 
   "walkedTileSetting": "open", // (open): walkable more than once | (closed): walkable once - not deadly.
-  "walkedTileByAntiVirus": "closed", // (closed-damaging): walkable once - damaging | (closed-deadly): walkable once - deadly
+  "walkedTileByAntiVirus": "closed-deadly", // (closed-damaging): walkable once - damaging | (closed-deadly): walkable once - deadly
   "antiVirusTailLength": 4, // 0 to disable fading footprints
 
   "mapSeed": "", // seed for generating the map

@@ -40,13 +40,14 @@ map = {
     },
 
 
-    newSeed: function() {
+    newSeed: function () {
+        this.seededGen = new Srand();
         if (config('mapSeed') == '') {
             // get random seed
-            this.seed = Srand.randomize();
+            this.seed = this.seededGen.randomize();
         } else {
             this.seed = config('mapSeed');
-            Srand.seed(this.seed);
+            this.seededGen.seed(this.seed);
         }
 
         console.log('The seed is: "' + this.seed.toString() + '".');
@@ -61,15 +62,19 @@ map = {
         return (diffY + diffX) + config('extraMoves');
     },
 
-    getRandomTile: function(tileType) {
+    getRandomTile: function(tileType, seededGen) {
         var isTileOccupied = true;
         var isTooClose = false;
+
+        if (typeof (seededGen) == 'undefined') {
+            seededGen = this.seededGen;
+        }
 
         // get random x, y coordinates to get a random tile
         // https://stackoverflow.com/a/4550514
         while (isTileOccupied || isTooClose) {
-            var tileX = Math.floor(Srand.random() * config('level').widthInTiles);
-            var tileY = Math.floor(Srand.random() * config('level').heightInTiles);
+            var tileX = Math.floor(seededGen.random() * config('level').widthInTiles);
+            var tileY = Math.floor(seededGen.random() * config('level').heightInTiles);
             var newTile = map.getTile(tileX, tileY);
 
             if (typeof (tileType) == 'undefined' || tileType == 'Player') {
