@@ -18,33 +18,28 @@ map = {
     },
 
     getPath: function (tile1, tile2) {
-        var grid = this.getGrid(true);
+        var grid = this.getGrid();
         return this.finder.findPath(tile1.x, tile1.y, tile2.x, tile2.y, grid);
     },
 
     getPathToPlayer: function (startX, startY) {
         var grid = this.getGrid();
-
         return this.finder.findPath(startX, startY, this.playerTile.x, this.playerTile.y, grid);
     },
 
     // generate a grid representing the map, with 1 as blocked, and 0 as walkable
-    getGrid: function (forceNewGrid) {
-        if (this.playerTile != this.oldPlayerTile || forceNewGrid) {
-            this.grid = new PF.Grid(this.widthInTiles, this.heightInTiles);
+    getGrid: function () {
+        var grid = new PF.Grid(this.widthInTiles, this.heightInTiles);
+        for (var y = 0; y < this.heightInTiles; y++) {
+            for (var x = 0; x < this.widthInTiles; x++) {
+                var tile = map.getTile(x, y);
 
-            for (var y = 0; y < this.heightInTiles; y++) {
-                for (var x = 0; x < this.widthInTiles; x++) {
-                    var tile = map.getTile(x, y);
-
-                    if (tile.contents != '') {
-                        this.grid.setWalkableAt(x, y, false);
-                    }
+                if (tile.contents != '') {
+                    grid.setWalkableAt(x, y, false);
                 }
             }
         }
-        this.oldPlayerTile = this.playerTile;
-        return this.grid;
+        return grid;
     },
 
 

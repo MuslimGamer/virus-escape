@@ -55,6 +55,7 @@ externs = {
   "antiVirusTailLength": 4, // 0 to disable fading footprints
 
   "mapSeed": "", // seed for generating the map
+  "pathNodes": 4,
 
   "minDistanceToGate": 3, // how many movements, at minimum, between the player and WinGate
 

@@ -15,39 +15,35 @@ Game = {
         map.init(config("level").widthInTiles, config("level").heightInTiles);
         Crafty.e("Level").loadMap(map);
 
-        //var playerEntity = Crafty.e("Player").placeInRandomTile('Player');
-        //map.playerTile = playerEntity.tile;
-
-        var paths = [];
+        var path = [];
+        var startTile = null;
         var exit = map.getRandomTile('WinGate').setWinGate();
 
-        var t1 = map.getRandomTile();
-        var path1 = map.getPath(exit, t1);
-        paths = paths.concat(path1)
+        for (i = 0; i < config('pathNodes'); i++) {
+            if (startTile == null) {
+                startTile = exit;
+            }
+            var stopTile = map.getRandomTile();
+            path = path.concat(map.getPath(startTile, stopTile));
+            startTile = stopTile;
+        }
 
-        var t2 = map.getRandomTile();
-        var path2 = map.getPath(t1, t2);
-        paths = paths.concat(path2)
-
-        var t3 = map.getRandomTile();
-        var path3 = map.getPath(t2, t3);
-        paths = paths.concat(path3)
-
-        var playerEntity = Crafty.e('Player').moveTo(t3);
+        var playerEntity = Crafty.e('Player').moveTo(stopTile);
         map.playerTile = playerEntity.tile;
+
+        function isInArray(array, x, y) {
+            for (var i = 0; i < array.length; i++) {
+                var tileMove = array[i];
+                if (x == tileMove[0] && y == tileMove[1]) {
+                    return true;
+                }
+            }
+            return false;
+        }
 
         for (var x = 0; x < map.widthInTiles; x++) {
             for (var y = 0; y < map.heightInTiles; y++) {
-                var setDanger = true;
-
-                for (var i = 0; i < paths.length; i++) {
-                    var tileMove = paths[i];
-                    if (x == tileMove[0] && y == tileMove[1]) {
-                        setDanger = false;
-                    }
-                }
-
-                if (setDanger) {
+                if (!isInArray(path, x, y)) {
                     map.getTile(x, y).setStrongDangerTile();
                 }
             }
