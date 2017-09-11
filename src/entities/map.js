@@ -3,7 +3,9 @@ map = {
     init: function(widthInTiles, heightInTiles, levelNumber) {
         this.widthInTiles = widthInTiles;
         this.heightInTiles = heightInTiles;
+
         this.levelNumber = levelNumber;
+        this.finder = new PF.AStarFinder();
 
         // hash: key is coordinates (eg. "x, y" and value is tile data)
         this.data = {};
@@ -15,17 +17,19 @@ map = {
         }
     },
 
+    getPath: function (tile1, tile2) {
+        var grid = this.getGrid();
+        return this.finder.findPath(tile1.x, tile1.y, tile2.x, tile2.y, grid);
+    },
+
     getPathToPlayer: function (startX, startY) {
         var grid = this.getGrid();
-        var finder = new PF.AStarFinder();
-
-        return finder.findPath(startX, startY, this.playerTile.x, this.playerTile.y, grid);
+        return this.finder.findPath(startX, startY, this.playerTile.x, this.playerTile.y, grid);
     },
 
     // generate a grid representing the map, with 1 as blocked, and 0 as walkable
     getGrid: function () {
         var grid = new PF.Grid(this.widthInTiles, this.heightInTiles);
-
         for (var y = 0; y < this.heightInTiles; y++) {
             for (var x = 0; x < this.widthInTiles; x++) {
                 var tile = map.getTile(x, y);
@@ -35,18 +39,18 @@ map = {
                 }
             }
         }
-
         return grid;
     },
 
 
-    newSeed: function() {
+    newSeed: function () {
+        this.seededGen = new Srand();
         if (config('mapSeed') == '') {
             // get random seed
-            this.seed = Srand.randomize();
+            this.seed = this.seededGen.randomize();
         } else {
             this.seed = config('mapSeed');
-            Srand.seed(this.seed);
+            this.seededGen.seed(this.seed);
         }
 
         console.log('The seed is: "' + this.seed.toString() + '".');
@@ -61,18 +65,22 @@ map = {
         return (diffY + diffX) + config('extraMoves');
     },
 
-    getRandomTile: function(tileType) {
+    getRandomTile: function(tileType, seededGen) {
         var isTileOccupied = true;
         var isTooClose = false;
+
+        if (typeof (seededGen) == 'undefined') {
+            seededGen = this.seededGen;
+        }
 
         // get random x, y coordinates to get a random tile
         // https://stackoverflow.com/a/4550514
         while (isTileOccupied || isTooClose) {
-            var tileX = Math.floor(Srand.random() * config('level').widthInTiles);
-            var tileY = Math.floor(Srand.random() * config('level').heightInTiles);
+            var tileX = Math.floor(seededGen.random() * config('level').widthInTiles);
+            var tileY = Math.floor(seededGen.random() * config('level').heightInTiles);
             var newTile = map.getTile(tileX, tileY);
 
-            if (typeof (tileType) == 'undefined' || tileType == 'Player') {
+            if (typeof (tileType) == 'undefined' || tileType == 'Player' || typeof (this.playerTile) == 'undefined') {
                 // check if tile is empty
                 isTileOccupied = newTile.contents != '' || newTile.entity != '';
             } else {
@@ -85,6 +93,7 @@ map = {
                 isTileOccupied = newTile.contents != '' || newTile.entity != '';
             }
         }
+
 
         if (tileType == 'WinGate') {
             this.winGate = newTile;

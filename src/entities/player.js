@@ -82,6 +82,9 @@ Crafty.c('Player', {
         else if (k == Crafty.keys.RIGHT_ARROW || k == Crafty.keys.D) {
             var movement = 1;
             var which = 'x';
+        } else if (config('spaceToPassTick') && k == Crafty.keys.SPACE) {
+            Crafty.trigger('TickEvent');
+            return;
         } else {
             return;
         }

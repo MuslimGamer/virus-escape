@@ -25,6 +25,9 @@ Crafty.c('Level', {
         if (config('allowAntiVirusEntities')) {
             this.antiVirusMovePoints = 0;
         }
+        if (config('antiVirusTailLength') > 0) {
+            this.fadingTiles = [];
+        }
     },
 
     loadMap: function(map) {
@@ -46,6 +49,8 @@ Crafty.c('Level', {
                 tileData.setView(mapTile);
             }
         }
+
+        this.scanTileSeededGen = new Srand(map.seededGen.random());
     },
 
     tickEvent: function () {
@@ -53,7 +58,26 @@ Crafty.c('Level', {
             this.antiVirusMovePoints += 1;
             if (this.antiVirusMovePoints >= config('antiVirusMovementCost')) {
                 this.antiVirusMovePoints = 0;
-                Crafty.trigger('AntiVirusMove');
+                var antiVirusEntitiesList = Crafty('AntiVirus');
+                for (i = 0; i < antiVirusEntitiesList.length; i++) {
+                    var antiVirus = Crafty(antiVirusEntitiesList[i]);
+                    var tile = antiVirus.moving();
+                    if (tile != null) {
+                        this.fadingTiles.push(tile);
+                    }
+                }
+
+                for (var i = 0; i < this.fadingTiles.length; i++) {
+                    var tile = this.fadingTiles[i];
+                    tile.footprintFade++;
+                    if (tile.footprintFade >= config('antiVirusTailLength')) {
+                        tile.footprintFade = 0;
+                        tile.resetTile();
+
+                        var index = this.fadingTiles.indexOf(tile);
+                        this.fadingTiles.splice(index, 1);
+                    }
+                }
             }
         }
 
@@ -112,7 +136,7 @@ Crafty.c('Level', {
             this.scanCounter += 1;
             if (this.scanCounter >= config('tileScanningRate')) {
                 this.scanCounter = 0;
-                var scanningTile = map.getRandomTile().setScanningTile(1);
+                var scanningTile = map.getRandomTile('', this.scanTileSeededGen).setScanningTile(1);
 
                 if (conf.secondStage) {
                     this.scanningTiles2.push(scanningTile);
