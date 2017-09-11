@@ -14,7 +14,7 @@ function tileData(x, y) {
             return this;
         },
 
-        leave: function(footPrint, isVirus) {
+        leave: function(footPrint, allowFade) {
             switch (footPrint) {
                 case "closed":
                     this.contents = 'WallTile';
@@ -28,9 +28,15 @@ function tileData(x, y) {
                     this.contents = 'StrongDangerTile';
                     this.view.color('red');
                     break;
+                default:
+                    if (config('allowDisablingWeakDangerTiles')) {
+                        this.contents = '';
+                        this.view.color('blue')
+                    }
+                    break;
             }
             this.entity = '';
-            if (isVirus) {
+            if (allowFade) {
                 this.footprintFade = 0;
             }
 

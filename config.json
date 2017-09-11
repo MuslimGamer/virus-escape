@@ -42,6 +42,7 @@ externs = {
 
   "allowWeakDangerTile": true,
   "allowInvincibleDangerTile": true,
+  "allowDisablingWeakDangerTiles": false,
 
   "wallTilesPerLevel": 2,
   "dangerTilesPerLevel": 2, // multiplier for danger tiles. increment sparingly. zero to disable
