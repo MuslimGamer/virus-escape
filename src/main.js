@@ -15,10 +15,43 @@ Game = {
         map.init(config("level").widthInTiles, config("level").heightInTiles);
         Crafty.e("Level").loadMap(map);
 
-        var playerEntity = Crafty.e("Player").placeInRandomTile('Player');
+        //var playerEntity = Crafty.e("Player").placeInRandomTile('Player');
+        //map.playerTile = playerEntity.tile;
+
+        var paths = [];
+        var exit = map.getRandomTile('WinGate').setWinGate();
+
+        var t1 = map.getRandomTile();
+        var path1 = map.getPath(exit, t1);
+        paths = paths.concat(path1)
+
+        var t2 = map.getRandomTile();
+        var path2 = map.getPath(t1, t2);
+        paths = paths.concat(path2)
+
+        var t3 = map.getRandomTile();
+        var path3 = map.getPath(t2, t3);
+        paths = paths.concat(path3)
+
+        var playerEntity = Crafty.e('Player').moveTo(t3);
         map.playerTile = playerEntity.tile;
 
-        map.getRandomTile('WinGate').setWinGate();
+        for (var x = 0; x < map.widthInTiles; x++) {
+            for (var y = 0; y < map.heightInTiles; y++) {
+                var setDanger = true;
+
+                for (var i = 0; i < paths.length; i++) {
+                    var tileMove = paths[i];
+                    if (x == tileMove[0] && y == tileMove[1]) {
+                        setDanger = false;
+                    }
+                }
+
+                if (setDanger) {
+                    map.getTile(x, y).setStrongDangerTile();
+                }
+            }
+        }
 
         var dangerTilesNo = Math.floor(Game.levelNumber * config('dangerTilesPerLevel'));
         for (var i = 0; i < dangerTilesNo; i++) {

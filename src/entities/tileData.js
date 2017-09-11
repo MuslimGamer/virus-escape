@@ -137,11 +137,15 @@ function tileData(x, y) {
         setWallTile: function() {
             this.view.color('silver');
             this.contents = 'WallTile';
+
+            return this;
         },
 
         destroyEntity: function() {
             this.entity = '';
             this.entityView.die();
+
+            return this;
         }
     };
 

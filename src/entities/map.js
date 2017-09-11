@@ -3,7 +3,9 @@ map = {
     init: function(widthInTiles, heightInTiles, levelNumber) {
         this.widthInTiles = widthInTiles;
         this.heightInTiles = heightInTiles;
+
         this.levelNumber = levelNumber;
+        this.finder = new PF.AStarFinder();
 
         // hash: key is coordinates (eg. "x, y" and value is tile data)
         this.data = {};
@@ -15,28 +17,34 @@ map = {
         }
     },
 
+    getPath: function (tile1, tile2) {
+        var grid = this.getGrid(true);
+        return this.finder.findPath(tile1.x, tile1.y, tile2.x, tile2.y, grid);
+    },
+
     getPathToPlayer: function (startX, startY) {
         var grid = this.getGrid();
-        var finder = new PF.AStarFinder();
 
-        return finder.findPath(startX, startY, this.playerTile.x, this.playerTile.y, grid);
+        return this.finder.findPath(startX, startY, this.playerTile.x, this.playerTile.y, grid);
     },
 
     // generate a grid representing the map, with 1 as blocked, and 0 as walkable
-    getGrid: function () {
-        var grid = new PF.Grid(this.widthInTiles, this.heightInTiles);
+    getGrid: function (forceNewGrid) {
+        if (this.playerTile != this.oldPlayerTile || forceNewGrid) {
+            this.grid = new PF.Grid(this.widthInTiles, this.heightInTiles);
 
-        for (var y = 0; y < this.heightInTiles; y++) {
-            for (var x = 0; x < this.widthInTiles; x++) {
-                var tile = map.getTile(x, y);
+            for (var y = 0; y < this.heightInTiles; y++) {
+                for (var x = 0; x < this.widthInTiles; x++) {
+                    var tile = map.getTile(x, y);
 
-                if (tile.contents != '') {
-                    grid.setWalkableAt(x, y, false);
+                    if (tile.contents != '') {
+                        this.grid.setWalkableAt(x, y, false);
+                    }
                 }
             }
         }
-
-        return grid;
+        this.oldPlayerTile = this.playerTile;
+        return this.grid;
     },
 
 
@@ -77,7 +85,7 @@ map = {
             var tileY = Math.floor(seededGen.random() * config('level').heightInTiles);
             var newTile = map.getTile(tileX, tileY);
 
-            if (typeof (tileType) == 'undefined' || tileType == 'Player') {
+            if (typeof (tileType) == 'undefined' || tileType == 'Player' || typeof (this.playerTile) == 'undefined') {
                 // check if tile is empty
                 isTileOccupied = newTile.contents != '' || newTile.entity != '';
             } else {
@@ -90,6 +98,7 @@ map = {
                 isTileOccupied = newTile.contents != '' || newTile.entity != '';
             }
         }
+
 
         if (tileType == 'WinGate') {
             this.winGate = newTile;
