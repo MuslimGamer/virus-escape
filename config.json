@@ -12,6 +12,8 @@ externs = {
   "limitedMoves": false,
   "extraMoves": 3, // added to the generated number.
 
+  "spaceToPassTick": true,
+
   "playerHealth": 10,
   "dangerDamage": 5,
   "antiVirusDamage": 5,
