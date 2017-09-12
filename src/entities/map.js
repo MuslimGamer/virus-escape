@@ -26,6 +26,17 @@ map = {
         return this.getPath(tile, this.playerTile);
     },
 
+    getReachableTile: function () {
+        var tile = map.getRandomTile();
+        for (i = 0; i < this.heightInTiles * this.widthInTiles; i++) {
+            if (map.getPathToPlayer(tile).length != 0) {
+                return tile;
+            }
+            tile = map.getRandomTile()
+        }
+        return null;
+    },
+
     // generate a grid representing the map, with 1 as blocked, and 0 as walkable
     getGrid: function () {
         var grid = new PF.Grid(this.widthInTiles, this.heightInTiles);
@@ -63,11 +74,11 @@ map = {
         return (diffY + diffX) + config('extraMoves');
     },
 
-    getRandomTile: function(tileType, seededGen) {
+    getRandomTile: function(awayFromTile, seededGen) {
         var isTileOccupied = true;
         var isTooClose = false;
 
-        if (typeof (seededGen) == 'undefined') {
+        if (seededGen == undefined) {
             seededGen = this.seededGen;
         }
 
@@ -78,23 +89,18 @@ map = {
             var tileY = Math.floor(seededGen.random() * this.heightInTiles);
             var newTile = map.getTile(tileX, tileY);
 
-            if (typeof (tileType) == 'undefined' || tileType == 'Player' || typeof (this.playerTile) == 'undefined') {
+            if (awayFromTile == undefined) {
                 // check if tile is empty
                 isTileOccupied = newTile.contents != '' || newTile.entity != '';
             } else {
-                var diffY = Math.abs(tileY - this.playerTile.y);
-                var diffX = Math.abs(tileX - this.playerTile.x);
+                var diffY = Math.abs(tileY - awayFromTile.y);
+                var diffX = Math.abs(tileX - awayFromTile.x);
 
                 var distance = diffY + diffX;
 
-                isTooClose = (distance < config('minDistanceToGate'));
+                isTooClose = (distance < config('minDistanceBetweenTiles'));
                 isTileOccupied = newTile.contents != '' || newTile.entity != '';
             }
-        }
-
-
-        if (tileType == 'WinGate') {
-            this.winGate = newTile;
         }
 
         return newTile;

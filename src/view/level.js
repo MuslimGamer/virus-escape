@@ -61,6 +61,10 @@ Crafty.c('Level', {
                 var antiVirusEntitiesList = Crafty('AntiVirus');
                 for (i = 0; i < antiVirusEntitiesList.length; i++) {
                     var antiVirus = Crafty(antiVirusEntitiesList[i]);
+                    var origTile = antiVirus.tile;
+                    if (origTile != null && this.fadingTiles.indexOf(origTile) == -1) {
+                        this.fadingTiles.push(origTile);
+                    }
                     var tile = antiVirus.moving();
                     if (tile != null) {
                         this.fadingTiles.push(tile);
@@ -136,7 +140,7 @@ Crafty.c('Level', {
             this.scanCounter += 1;
             if (this.scanCounter >= config('tileScanningRate')) {
                 this.scanCounter = 0;
-                var scanningTile = map.getRandomTile('', this.scanTileSeededGen).setScanningTile(1);
+                var scanningTile = map.getRandomTile(undefined, this.scanTileSeededGen).setScanningTile(1);
 
                 if (conf.secondStage) {
                     this.scanningTiles2.push(scanningTile);
