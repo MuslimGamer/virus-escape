@@ -8,7 +8,7 @@ Crafty.c('AntiVirus', {
     },
 
     moving: function () {
-        var path = map.getPathToPlayer(this.tile.x, this.tile.y)[1]; // get first movement
+        var path = map.getPathToPlayer(this.tile)[1]; // get first movement
         if (typeof(path) == 'undefined') {
             return null;
         }
