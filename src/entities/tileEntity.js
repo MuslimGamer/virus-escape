@@ -19,8 +19,8 @@ Crafty.c('TileEntity', {
         return this;
     },
 
-    placeInRandomTile: function(tileType) {
-        this.moveTo(map.getRandomTile(tileType));
+    placeInRandomTile: function(awayFromTile) {
+        this.moveTo(map.getRandomTile(awayFromTile));
 
         return this;
     }

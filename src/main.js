@@ -23,14 +23,14 @@ Game = {
             if (startTile == null) {
                 startTile = exit;
             }
-            var stopTile = map.getRandomTile();
+            var stopTile = map.getRandomTile(exit);
             path = path.concat(map.getPath(startTile, stopTile));
             startTile = stopTile;
         }
 
         for (var x = 0; x < map.widthInTiles; x++) {
             for (var y = 0; y < map.heightInTiles; y++) {
-                map.getTile(x, y).setStrongDangerTile();
+                map.getTile(x, y).setWallTile();
             }
         }
 
@@ -41,8 +41,29 @@ Game = {
         }
 
         exit.setWinGate();
+        map.winGate = exit;
+
         var playerEntity = Crafty.e('Player').moveTo(stopTile);
         map.playerTile = playerEntity.tile;
+
+        var pathToExit = map.getPathToPlayer(exit);
+
+        pathToExit.splice(0, 1);
+        pathToExit.splice(pathToExit.length, 1);
+
+        var tile = Srand.choice(pathToExit);
+        tile = map.getTile(tile[0], tile[1]);
+
+        if (map.getPathToPlayer(exit).length > 0) {
+            tile.contents = 'PLACEHOLDER';
+            var switchTile = map.getReachableTile();
+            if (switchTile == null || map.getPathToPlayer(switchTile).length == 0) {
+                tile.resetTile();
+            } else {
+                tile.setSwitchGate();
+                switchTile.setSwitch(tile);
+            }
+        }
 
 
         var dangerTilesNo = Math.floor(Game.levelNumber * config('dangerTilesPerLevel'));
@@ -56,7 +77,6 @@ Game = {
             } else {
                 break;
             }
-
             map.getRandomTile()[dangerTile]();
         }
 

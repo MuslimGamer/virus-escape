@@ -18,9 +18,9 @@ externs = {
   "dangerDamage": 5,
   "antiVirusDamage": 5,
 
-  "allowAntiVirusEntities": true,
+  "allowAntiVirusEntities": false,
   "antiVirusMovementCost": 1,
-  "antiVirusesPerLevel": 0,
+  "antiVirusesPerLevel": 1,
 
   "allowTileScanning": {
     "all": false,
@@ -55,9 +55,9 @@ externs = {
   "antiVirusTailLength": 4, // 0 to disable fading footprints
 
   "mapSeed": "", // seed for generating the map
-  "pathNodes": 4,
+  "pathNodes": 3,
 
-  "minDistanceToGate": 3, // how many movements, at minimum, between the player and WinGate
+  "minDistanceBetweenTiles": 6, // how many movements, at minimum, between the player and WinGate
 
   "switchGatesBefore": {
     "tileType": "WallTile"
