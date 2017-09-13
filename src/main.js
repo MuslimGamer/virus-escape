@@ -28,9 +28,42 @@ Game = {
             startTile = stopTile;
         }
 
+        function isInArray(array, move) {
+            for (i = 0; i < path.length; i++) {
+                if (move.every(function (v, i) { return v === path[i] })) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        path.splice(0, 1);
+        path.splice(path.length, 1);
+
         for (var x = 0; x < map.widthInTiles; x++) {
             for (var y = 0; y < map.heightInTiles; y++) {
-                map.getTile(x, y).setWallTile();
+                if (!isInArray(path, [x, y])) {
+                    var tile = map.getTile(x, y);
+                    var antiVirusno = 0;
+                    var choice = Srand.choice(['StrongDangerTile', 'WeakDangerTile', 'AntiVirus', 'WallTile', 'WallTile', 'WallTile', 'WallTile', 'EMPTY', 'EMPTY'])
+                    switch (choice) {
+                        case 'StrongDangerTile':
+                            tile.setStrongDangerTile();
+                            break;
+                        case 'WeakDangerTile':
+                            tile.setWeakDangerTile();
+                            break;
+                        case 'AntiVirus':
+                            antiVirusno++;
+                            if (antiVirusno => 2) {
+                                Crafty.e('AntiVirus').moveTo(tile);
+                            }
+                            break;
+                        case 'WallTile':
+                            tile.setWallTile();
+                            break;
+                    }
+                }
             }
         }
 
@@ -103,7 +136,7 @@ Game = {
         if (config('allowAntiVirusEntities')) {
             var numAntiViruses = Math.floor(Game.levelNumber * config('antiVirusesPerLevel'));
             for (i = 0; i < numAntiViruses; i++) {
-                Crafty.e('AntiVirus').placeInRandomTile('AntiVirus');
+                Crafty.e('AntiVirus').placeInRandomTile();
             }
         }
 

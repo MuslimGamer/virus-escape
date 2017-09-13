@@ -18,9 +18,9 @@ externs = {
   "dangerDamage": 5,
   "antiVirusDamage": 5,
 
-  "allowAntiVirusEntities": false,
+  "allowAntiVirusEntities": true,
   "antiVirusMovementCost": 1,
-  "antiVirusesPerLevel": 1,
+  "antiVirusesPerLevel": 0,
 
   "allowTileScanning": {
     "all": false,
