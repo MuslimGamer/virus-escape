@@ -44,7 +44,7 @@ Game = {
             for (var y = 0; y < map.heightInTiles; y++) {
                 if (!isInArray(path, [x, y])) {
                     var tile = map.getTile(x, y);
-                    var antiVirusno = 0;
+                    var antiVirusNumber = 0;
                     var choice = Srand.choice(['StrongDangerTile', 'WeakDangerTile', 'AntiVirus', 'WallTile', 'WallTile', 'WallTile', 'WallTile', 'EMPTY', 'EMPTY'])
                     switch (choice) {
                         case 'StrongDangerTile':
@@ -54,7 +54,7 @@ Game = {
                             tile.setWeakDangerTile();
                             break;
                         case 'AntiVirus':
-                            antiVirusno++;
+                            antiVirusNumber++;
                             if (antiVirusno => 2) {
                                 Crafty.e('AntiVirus').moveTo(tile);
                             }

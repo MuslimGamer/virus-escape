@@ -28,13 +28,16 @@ map = {
 
     getReachableTile: function () {
         var tile = map.getRandomTile();
-        for (i = 0; i < this.heightInTiles * this.widthInTiles; i++) {
-            if (map.getPathToPlayer(tile).length != 0) {
-                return tile;
-            }
-            tile = map.getRandomTile()
+        var attempts = 0;
+        while (map.getPathToPlayer(tile).length == 0 && attempts < this.widthInTiles * this.heightInTiles) {
+            tile = map.getRandomTile();
+            attempts++;
         }
-        return null;
+        if (map.getPathToPlayer(tile).length != 0) {
+            return tile;
+        } else {
+            return null;
+        }
     },
 
     // generate a grid representing the map, with 1 as blocked, and 0 as walkable
