@@ -36,42 +36,7 @@ Game = {
             }
             return false;
         }
-
-        path.splice(0, 1);
-        path.splice(path.length, 1);
-
-        for (var x = 0; x < map.widthInTiles; x++) {
-            for (var y = 0; y < map.heightInTiles; y++) {
-                if (!isInArray(path, [x, y])) {
-                    var tile = map.getTile(x, y);
-                    var antiVirusNumber = 0;
-                    var choice = Srand.choice(['StrongDangerTile', 'WeakDangerTile', 'AntiVirus', 'WallTile', 'WallTile', 'WallTile', 'WallTile', 'EMPTY', 'EMPTY'])
-                    switch (choice) {
-                        case 'StrongDangerTile':
-                            tile.setStrongDangerTile();
-                            break;
-                        case 'WeakDangerTile':
-                            tile.setWeakDangerTile();
-                            break;
-                        case 'AntiVirus':
-                            antiVirusNumber++;
-                            if (antiVirusno => 2) {
-                                Crafty.e('AntiVirus').moveTo(tile);
-                            }
-                            break;
-                        case 'WallTile':
-                            tile.setWallTile();
-                            break;
-                    }
-                }
-            }
-        }
-
-        for (i = 0; i < path.length; i++) {
-            var coords = path[i];
-            var tile = map.getTile(coords[0], coords[1]);
-            tile.resetTile();
-        }
+        var generator = new Srand(map.seededGen.random());
 
         exit.setWinGate();
         map.winGate = exit;
@@ -79,12 +44,56 @@ Game = {
         var playerEntity = Crafty.e('Player').moveTo(stopTile);
         map.playerTile = playerEntity.tile;
 
+        var randomTileChance = config('probabilityOfSpawningTile') + (config('incrementProbabilityPerLevel') * Game.levelNumber);
+        if (randomTileChance > config('maxProbability')) {
+            randomTileChance = config('maxProbability');
+        }
+
+        for (var x = 0; x < map.widthInTiles; x++) {
+            for (var y = 0; y < map.heightInTiles; y++) {
+                if (!isInArray(path, [x, y]) && generator.random() < randomTileChance) {
+                    var tile = map.getTile(x, y);
+                    if (tile.contents == '' && tile.entity == '') {
+                        var antiVirusNumber = 0;
+                        var choice = generator.choice(['StrongDangerTile', 'WeakDangerTile', 'WallTile', 'WallTile', 'WallTile', 'WallTile', 'AntiVirus'])
+                        switch (choice) {
+                            case 'StrongDangerTile':
+                                tile.setStrongDangerTile();
+                                break;
+                            case 'WeakDangerTile':
+                                tile.setWeakDangerTile();
+                                break;
+                            case 'AntiVirus':
+                                antiVirusNumber++;
+                                if (antiVirusno => 2) {
+                                    Crafty.e('AntiVirus').moveTo(tile);
+                                    antiVirusNumber = 0;
+                                }
+                                break;
+                            case 'WallTile':
+                                tile.setWallTile();
+                                break;
+                        }
+                    }
+                }
+            }
+        }
+
+        path.splice(0, 1);
+        path.splice(path.length - 1, 1);
+
+        for (i = 0; i < path.length; i++) {
+            var coords = path[i];
+            var tile = map.getTile(coords[0], coords[1]);
+            tile.resetTile();
+        }
+
         var pathToExit = map.getPathToPlayer(exit);
 
         pathToExit.splice(0, 1);
-        pathToExit.splice(pathToExit.length, 1);
+        pathToExit.splice(pathToExit.length - 1, 1);
 
-        var tile = Srand.choice(pathToExit);
+        var tile = generator.choice(pathToExit);
         tile = map.getTile(tile[0], tile[1]);
 
         if (map.getPathToPlayer(exit).length > 0) {
@@ -102,7 +111,7 @@ Game = {
         var dangerTilesNo = Math.floor(Game.levelNumber * config('dangerTilesPerLevel'));
         for (var i = 0; i < dangerTilesNo; i++) {
             if (config('allowWeakDangerTile') && config('allowInvincibleDangerTile')) {
-                var dangerTile = Srand.choice(['setWeakDangerTile', 'setStrongDangerTile']);
+                var dangerTile = generator.choice(['setWeakDangerTile', 'setStrongDangerTile']);
             } else if (config('allowWeakDangerTile')) {
                 var dangerTile = 'setWeakDangerTile';
             } else if (config('allowInvincibleDangerTile')) {

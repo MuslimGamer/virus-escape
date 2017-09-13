@@ -14,6 +14,10 @@ Crafty.c('AntiVirus', {
         }
         var tile = map.getTile(path[0], path[1]); // get tile from map
 
+        if (tile.entity == 'AntiVirus') {
+            return null;
+        }
+
         if (tile.entity == 'Player') {
             tile.entityView.reduceHealth(config('antiVirusDamage'));
         }

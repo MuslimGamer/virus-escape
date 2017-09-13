@@ -1,18 +1,23 @@
 externs = {
+
+  // [Things you shouldn't touch]
+
   "level": {
     // size in tiles
     "widthInTiles": 8,
     "heightInTiles": 8
   },
-
   "tileSize": 64, // tiles are 32x32px
   "padding": 8,
 
-  "timerSeconds": 0, // set to 0 to disable
-  "limitedMoves": false,
-  "extraMoves": 3, // added to the generated number.
+  // [General]
 
+  "timerSeconds": 0, // set to 0 to disable
   "spaceToPassTick": true,
+
+  "probabilityOfSpawningTile": 0.20,
+  "incrementProbabilityPerLevel": 0.10,
+  "maxProbability": 0.70,
 
   "playerHealth": 10,
   "dangerDamage": 5,
@@ -20,7 +25,17 @@ externs = {
 
   "allowAntiVirusEntities": true,
   "antiVirusMovementCost": 1,
-  "antiVirusesPerLevel": 0,
+
+  "mapSeed": "2828407160", // seed for generating the map
+  "pathNodes": 3,
+
+  "minDistanceBetweenTiles": 5,
+
+  "walkedTileSetting": "open", // (open): walkable more than once | (closed): walkable once - not deadly.
+  "walkedTileByAntiVirus": "closed-deadly", // (closed-damaging): walkable once - damaging | (closed-deadly): walkable once - deadly
+  "antiVirusTailLength": 4, // 0 to disable fading footprints
+
+  // [Tile Scanning]
 
   "allowTileScanning": {
     "all": false,
@@ -42,27 +57,26 @@ externs = {
     "thirdEffect": "WeakDangerTile"
   },
 
+  // [Danger Tiles]
+
   "allowWeakDangerTile": true,
   "allowInvincibleDangerTile": true,
   "allowDisablingWeakDangerTiles": false,
-
-  "wallTilesPerLevel": 0,
-  "dangerTilesPerLevel": 0, // multiplier for danger tiles. increment sparingly. zero to disable
-  "switchGatesPerLevel": 0, // multiplier for switch gates. increment sparingly. zero to disable
-
-  "walkedTileSetting": "open", // (open): walkable more than once | (closed): walkable once - not deadly.
-  "walkedTileByAntiVirus": "closed-deadly", // (closed-damaging): walkable once - damaging | (closed-deadly): walkable once - deadly
-  "antiVirusTailLength": 4, // 0 to disable fading footprints
-
-  "mapSeed": "", // seed for generating the map
-  "pathNodes": 3,
-
-  "minDistanceBetweenTiles": 6, // how many movements, at minimum, between the player and WinGate
 
   "switchGatesBefore": {
     "tileType": "WallTile"
   },
   "switchGatesAfter": {
     "tileType": ""
-  }
+  },
+
+  // [Deprecated] -- you can touch these, but don't come crying if you break the game :P
+
+  "limitedMoves": false,
+  "extraMoves": 3, // added to the generated number.
+  "antiVirusesPerLevel": 0,
+
+  "wallTilesPerLevel": 0,
+  "dangerTilesPerLevel": 0, // multiplier for danger tiles. increment sparingly. zero to disable
+  "switchGatesPerLevel": 0 // multiplier for switch gates. increment sparingly. zero to disable
 }
