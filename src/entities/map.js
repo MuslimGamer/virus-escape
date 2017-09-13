@@ -78,7 +78,7 @@ map = {
         var isTileOccupied = true;
         var isTooClose = false;
 
-        if (seededGen == undefined) {
+        if (typeof (seededGen) == 'undefined') {
             seededGen = this.seededGen;
         }
 
@@ -89,7 +89,7 @@ map = {
             var tileY = Math.floor(seededGen.random() * this.heightInTiles);
             var newTile = map.getTile(tileX, tileY);
 
-            if (awayFromTile == undefined) {
+            if (typeof(awayFromTile) == 'undefined') {
                 // check if tile is empty
                 isTileOccupied = newTile.contents != '' || newTile.entity != '';
             } else {

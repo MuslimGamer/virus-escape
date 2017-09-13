@@ -41,6 +41,8 @@ Game = {
         }
 
         exit.setWinGate();
+        map.winGate = exit;
+
         var playerEntity = Crafty.e('Player').moveTo(stopTile);
         map.playerTile = playerEntity.tile;
 

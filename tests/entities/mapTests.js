@@ -42,15 +42,15 @@ QUnit.test("Map: getPath gets the path between two tiles", function (assert) {
 
   var tile1 = map.getTile(0, 0);
   var tile2 = map.getTile(7, 7);
-  assert.equal(map.getPath(tile1, tile2), "0,0,1,0,2,0,3,0,3,1,3,2,4,2,4,3,4,4,4,5,4,6,5,6,6,6,7,6,7,7");
+  assert.equal(map.getPath(tile1, tile2), [[0, 0], [1, 0], [2, 0], [3, 0], [3, 1], [3, 2], [4, 2], [4, 3], [4, 4], [4, 5], [4, 6], [5, 6], [6, 6], [7, 6], [7, 7]].toString());
 
   var tile1 = map.getTile(0, 7);
   var tile2 = map.getTile(0, 0);
-  assert.equal(map.getPath(tile1, tile2), "0,7,0,6,0,5,0,4,0,3,0,2,0,1,0,0");
+  assert.equal(map.getPath(tile1, tile2), [[0, 7], [0, 6], [0, 5], [0, 4], [0, 3], [0, 2], [0, 1], [0, 0]].toString());
 
   var tile1 = map.getTile(5, 6);
   var tile2 = map.getTile(1, 3);
-  assert.equal(map.getPath(tile1, tile2), "5,6,5,5,4,5,4,4,3,4,2,4,2,3,1,3");
+  assert.equal(map.getPath(tile1, tile2), [[5, 6], [5, 5], [4, 5], [4, 4], [3, 4], [2, 4], [2, 3], [1, 3]].toString());
 
 });
 
