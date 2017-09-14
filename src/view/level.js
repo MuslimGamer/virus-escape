@@ -88,7 +88,12 @@ Crafty.c('Level', {
         }
         var player = Crafty('Player');
         if (player.tile.entity == 'AntiVirus') {
-            player.reduceHealth(config('antiVirusDamage'));
+            if (config('deadlyAntiViruses')) {
+                Game.loseLevel();
+                return;
+            } else {
+                player.reduceHealth(config('antiVirusDamage'));
+            }
         }
         if (player.tile.contents == 'WeakDangerTile') {
             player.reduceHealth(config('dangerDamage'));

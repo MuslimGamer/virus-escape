@@ -49,12 +49,12 @@ Game = {
             randomTileChance = config('maxProbability');
         }
 
+        var antiVirusNumber = 0;
         for (var x = 0; x < map.widthInTiles; x++) {
             for (var y = 0; y < map.heightInTiles; y++) {
                 if (!isInArray(path, [x, y]) && generator.random() < randomTileChance) {
                     var tile = map.getTile(x, y);
                     if (tile.contents == '' && tile.entity == '') {
-                        var antiVirusNumber = 0;
                         var choice = generator.choice(['StrongDangerTile', 'WeakDangerTile', 'WallTile', 'WallTile', 'WallTile', 'WallTile', 'AntiVirus'])
                         switch (choice) {
                             case 'StrongDangerTile':
@@ -65,7 +65,7 @@ Game = {
                                 break;
                             case 'AntiVirus':
                                 antiVirusNumber++;
-                                if (antiVirusno >= 2) {
+                                if (antiVirusNumber >= 2) {
                                     Crafty.e('AntiVirus').moveTo(tile);
                                     antiVirusNumber = 0;
                                 }
