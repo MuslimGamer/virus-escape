@@ -95,6 +95,7 @@ function tileData(x, y) {
 
             this.isOn = false;
             this.view.color('aqua', 0.5);
+            this.contents = '';
             this.switchGate.view.color('purple', 0.5);
             this.switchGate.contents = config('switchGatesAfter').tileType;
 

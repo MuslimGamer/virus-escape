@@ -2,7 +2,7 @@
 Crafty.c('TileEntity', {
     init: function() {
         this.requires('Actor')
-            .size(32, 32);
+            .size(config('tileSize') / 2, config('tileSize') / 2);
 
         // Must be implemented in every sub-class
         this.nameInTile = 'Default';

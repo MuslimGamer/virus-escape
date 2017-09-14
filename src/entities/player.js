@@ -15,6 +15,7 @@ Crafty.c('Player', {
         this.healthCounter.setHealth(this.health);
         if (this.health <= 0) {
             Game.loseLevel();
+            return;
         }
     },
 
@@ -23,10 +24,12 @@ Crafty.c('Player', {
 
         if (tileType == 'WinGate') {
             Game.completeLevel();
+            return;
         } else if (tileType == 'WeakDangerTile') {
             this.reduceHealth(config('dangerDamage'));
         } else if (tileType == 'StrongDangerTile') {
             Game.loseLevel();
+            return;
         } else if (tileType == 'Switch' && newTile.isOn == true) { 
             newTile.activate();
         } else if (newTile.entity == 'AntiVirus') {
@@ -37,6 +40,7 @@ Crafty.c('Player', {
             this.moves -= 1;
             if (this.moves < 0) {
                 Game.loseLevel();
+                return;
             }
             this.moveCounter.setMoves(this.moves);
         }
