@@ -26,7 +26,7 @@ externs = {
   "allowAntiVirusEntities": true,
   "antiVirusMovementCost": 1,
 
-  "mapSeed": "2828407160", // seed for generating the map
+  "mapSeed": "2836216030", // seed for generating the map
   "pathSegments": 3,
 
   "minDistanceBetweenTiles": 5,

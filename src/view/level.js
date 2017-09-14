@@ -65,9 +65,11 @@ Crafty.c('Level', {
                     if (origTile != null && this.fadingTiles.indexOf(origTile) == -1) {
                         this.fadingTiles.push(origTile);
                     }
-                    var tile = antiVirus.moving();
-                    if (tile != null) {
-                        this.fadingTiles.push(tile);
+                    if (antiVirus.isDead == false) {
+                        var tile = antiVirus.moving();
+                        if (tile != null) {
+                            this.fadingTiles.push(tile);
+                        }
                     }
                 }
 
