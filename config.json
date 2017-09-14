@@ -27,7 +27,7 @@ externs = {
   "antiVirusMovementCost": 1,
 
   "mapSeed": "2828407160", // seed for generating the map
-  "pathNodes": 3,
+  "pathSegments": 3,
 
   "minDistanceBetweenTiles": 5,
 

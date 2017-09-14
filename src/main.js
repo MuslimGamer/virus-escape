@@ -19,7 +19,7 @@ Game = {
         var startTile = null;
         var exit = map.getRandomTile();
 
-        for (i = 0; i < config('pathNodes'); i++) {
+        for (i = 0; i < config('pathSegments'); i++) {
             if (startTile == null) {
                 startTile = exit;
             }
