@@ -4,11 +4,11 @@ externs = {
 
   "level": {
     // size in tiles
-    "widthInTiles": 8,
-    "heightInTiles": 8
+    "widthInTiles": 16,
+    "heightInTiles": 16
   },
-  "tileSize": 64, // tiles are 32x32px
-  "padding": 8,
+  "tileSize": 32, // tiles are 32x32px
+  "padding": 4,
 
   // [General]
 
@@ -38,7 +38,7 @@ externs = {
   // [Tile Scanning]
 
   "allowTileScanning": {
-    "all": false,
+    "all": true,
     "firstStage": true,
     "secondStage": true,
     "thirdStage": true,
