@@ -18,10 +18,6 @@ Crafty.c('AntiVirus', {
             return null;
         }
 
-        if (tile.entity == 'Player') {
-            tile.entityView.reduceHealth(config('antiVirusDamage'));
-        }
-
         if (config('antiVirusTailLength') > 0) {
             returnTile = tile;
         }
