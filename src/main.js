@@ -65,7 +65,7 @@ Game = {
                                 break;
                             case 'AntiVirus':
                                 antiVirusNumber++;
-                                if (antiVirusno => 2) {
+                                if (antiVirusno >= 2) {
                                     Crafty.e('AntiVirus').moveTo(tile);
                                     antiVirusNumber = 0;
                                 }
