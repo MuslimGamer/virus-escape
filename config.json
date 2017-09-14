@@ -22,6 +22,7 @@ externs = {
   "playerHealth": 10,
   "dangerDamage": 5,
   "antiVirusDamage": 5,
+  "deadlyAntiViruses": true,
 
   "allowAntiVirusEntities": true,
   "antiVirusMovementCost": 1,
