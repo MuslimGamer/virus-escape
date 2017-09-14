@@ -65,9 +65,11 @@ Crafty.c('Level', {
                     if (origTile != null && this.fadingTiles.indexOf(origTile) == -1) {
                         this.fadingTiles.push(origTile);
                     }
-                    var tile = antiVirus.moving();
-                    if (tile != null) {
-                        this.fadingTiles.push(tile);
+                    if (antiVirus.isDead == false) {
+                        var tile = antiVirus.moving();
+                        if (tile != null) {
+                            this.fadingTiles.push(tile);
+                        }
                     }
                 }
 
@@ -83,6 +85,17 @@ Crafty.c('Level', {
                     }
                 }
             }
+        }
+        var player = Crafty('Player');
+        if (player.tile.entity == 'AntiVirus') {
+            player.reduceHealth(config('antiVirusDamage'));
+        }
+        if (player.tile.contents == 'WeakDangerTile') {
+            player.reduceHealth(config('dangerDamage'));
+        }
+        if (player.tile.contents == 'StrongDangerTile') {
+            Game.loseLevel();
+            return;
         }
 
         if (config('allowTileScanning').all) {

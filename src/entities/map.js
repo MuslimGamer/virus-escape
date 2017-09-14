@@ -29,7 +29,8 @@ map = {
     getReachableTile: function () {
         var tile = map.getRandomTile();
         var attempts = 0;
-        while (map.getPathToPlayer(tile).length == 0 && attempts < this.widthInTiles * this.heightInTiles) {
+        var maxAttempts = this.widthInTiles * this.heightInTiles;
+        while (map.getPathToPlayer(tile).length == 0 && attempts < maxAttempts) {
             tile = map.getRandomTile();
             attempts++;
         }
