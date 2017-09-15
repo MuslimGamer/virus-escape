@@ -10,8 +10,8 @@ Game = {
     start: function () {
 
         function isInArray(array, x, y) {
-            for (i = 0; i < path.length; i++) {
-                var p = path[i];
+            for (i = 0; i < array.length; i++) {
+                var p = array[i];
                 if (p[0] == x && p[1] == y) {
                     return true;
                 }
@@ -19,19 +19,15 @@ Game = {
             return false;
         }
 
-        function removeInstanceFromArray(array, x, y) {
-            for (var i = 0; i < array.length; i++) {
+        function removeAllInstancesFromArray(array, x, y) {
+            while (isInArray(array, x, y)) {
+                for (var i = 0; i < array.length; i++) {
                 var coords = array[i];
                 if (coords[0] == x && coords[1] == y) {
                     array.splice(i, 1);
                     break;
                 }
             }
-        }
-
-        function removeAllInstancesFromArray(array, x, y) {
-            while (isInArray(array, x, y)) {
-                removeInstanceFromArray(array, x, y);
             }
         }
 
@@ -123,7 +119,6 @@ Game = {
                 switchTile.setSwitch(tile);
             }
         }
-
 
         var dangerTilesNo = Math.floor(Game.levelNumber * config('dangerTilesPerLevel'));
         for (var i = 0; i < dangerTilesNo; i++) {
