@@ -28,9 +28,10 @@ Game = {
             startTile = stopTile;
         }
 
-        function isInArray(array, move) {
+        function isInArray(array, x, y) {
             for (i = 0; i < path.length; i++) {
-                if (move.every(function (v, i) { return v === path[i] })) {
+                var p = path[i];
+                if (p[0] == x && p[1] == y) {
                     return true;
                 }
             }
@@ -52,7 +53,7 @@ Game = {
         var antiVirusNumber = 0;
         for (var x = 0; x < map.widthInTiles; x++) {
             for (var y = 0; y < map.heightInTiles; y++) {
-                if (!isInArray(path, [x, y]) && generator.random() < randomTileChance) {
+                if (!isInArray(path, x, y) && generator.random() < randomTileChance) {
                     var tile = map.getTile(x, y);
                     if (tile.contents == '' && tile.entity == '') {
                         var choice = generator.choice(['StrongDangerTile', 'WeakDangerTile', 'WallTile', 'WallTile', 'WallTile', 'WallTile', 'AntiVirus'])
