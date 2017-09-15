@@ -69,7 +69,6 @@ Game = {
                                 if (antiVirusNumber >= 2) {
                                     Crafty.e('AntiVirus').moveTo(tile);
                                     antiVirusNumber = 0;
-                                    console.log("Generated anti-virus on (" + x + ", " + y + "). Path is " + path);
                                 }
                                 break;
                             case 'WallTile':
