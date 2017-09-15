@@ -21,13 +21,14 @@ externs = {
 
   "playerHealth": 10,
   "dangerDamage": 5,
-  "antiVirusDamage": 5,
-  "deadlyAntiViruses": true,
 
   "allowAntiVirusEntities": true,
-  "antiVirusMovementCost": 1,
+  "antiVirusDamage": 5,
+  "deadlyAntiViruses": true, // i.e: ignore damage and just instakill the player. also disables player eating antiviruses
+  "antiVirusMovementCost": 2, // ratio for virus movements such as 1 antivirus movement: n player movements
+  "antiviruRandomMovements": true, // if true, move randomly. if false, hunt after the player.
 
-  "mapSeed": "2836216030", // seed for generating the map
+  "mapSeed": "", // seed for generating the map
   "pathSegments": 3,
 
   "minDistanceBetweenTiles": 5,

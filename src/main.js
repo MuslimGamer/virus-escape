@@ -7,7 +7,34 @@ Game = {
 
     levelNumber: 1,
 
-    start: function() {
+    start: function () {
+
+        function isInArray(array, x, y) {
+            for (i = 0; i < path.length; i++) {
+                var p = path[i];
+                if (p[0] == x && p[1] == y) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function removeInstanceFromArray(array, x, y) {
+            for (var i = 0; i < array.length; i++) {
+                var coords = array[i];
+                if (coords[0] == x && coords[1] == y) {
+                    array.splice(i, 1);
+                    break;
+                }
+            }
+        }
+
+        function removeAllInstancesFromArray(array, x, y) {
+            while (isInArray(array, x, y)) {
+                removeInstanceFromArray(array, x, y);
+            }
+        }
+
         // Game world is whatever fits on-screen
         Crafty.init(Game.view.width, Game.view.height);
         Crafty.background('black');
@@ -28,15 +55,6 @@ Game = {
             startTile = stopTile;
         }
 
-        function isInArray(array, x, y) {
-            for (i = 0; i < path.length; i++) {
-                var p = path[i];
-                if (p[0] == x && p[1] == y) {
-                    return true;
-                }
-            }
-            return false;
-        }
         var generator = new Srand(map.seededGen.random());
 
         exit.setWinGate();
@@ -79,9 +97,8 @@ Game = {
                 }
             }
         }
-
-        path.splice(0, 1);
-        path.splice(path.length - 1, 1);
+        
+        removeAllInstancesFromArray(path, exit.x, exit.y);
 
         for (i = 0; i < path.length; i++) {
             var coords = path[i];
@@ -91,8 +108,7 @@ Game = {
 
         var pathToExit = map.getPathToPlayer(exit);
 
-        pathToExit.splice(0, 1);
-        pathToExit.splice(pathToExit.length - 1, 1);
+        removeAllInstancesFromArray(pathToExit, exit.x, exit.y);
 
         var tile = generator.choice(pathToExit);
         tile = map.getTile(tile[0], tile[1]);
