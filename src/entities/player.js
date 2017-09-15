@@ -28,11 +28,11 @@ Crafty.c('Player', {
         } else if (tileType == 'Switch' && newTile.isOn == true) { 
             newTile.activate();
         } else if (newTile.entity == 'AntiVirus') {
-            if (config('deadlyAntiViruses')) {
+            if (config('eatableAntiViruses')) {
+                newTile.destroyEntity();
+            } else {
                 Game.loseLevel();
                 return;
-            } else {
-            newTile.destroyEntity();
             }
         }
 
