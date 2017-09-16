@@ -70,7 +70,7 @@ Game = {
                 if (!isInArray(path, x, y) && generator.random() < randomTileChance) {
                     var tile = map.getTile(x, y);
                     if (tile.contents == '' && tile.entity == '') {
-                        var choice = generator.choice(['StrongDangerTile', 'WeakDangerTile', 'WallTile', 'WallTile', 'WallTile', 'WallTile', 'AntiVirus'])
+                        var choice = generator.choice(['StrongDangerTile', 'WeakDangerTile', 'Empty', 'Empty', 'WallTile', 'WallTile', 'AntiVirus'])
                         switch (choice) {
                             case 'StrongDangerTile':
                                 tile.setStrongDangerTile();
@@ -87,6 +87,8 @@ Game = {
                                 break;
                             case 'WallTile':
                                 tile.setWallTile();
+                                break;
+                            case 'Empty':
                                 break;
                         }
                     }
