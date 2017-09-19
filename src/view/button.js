@@ -11,8 +11,8 @@
             var entity = Crafty(allTitleEntities[i]);
             entity.tween({ alpha: 0.0 }, 500);
         }
-        this.after(0.5, this.callBack);
-        this.after(0.6, this.cleanTitle);
+        this.after(1, this.cleanTitle);
+        this.callBack();
 
         return this;
     },

@@ -12,15 +12,28 @@ Game = {
         Crafty.init(Game.view.width, Game.view.height);
         Crafty.background('black');
 
-        Crafty.e('Button, TitleScreen').setCallBack(Game.preStart)
-                          .size(config('buttonWidth'), config('buttonHeight'))
-                          .text('Start game')
-                          .move(Game.view.width / 2, Game.view.height / 2);
+        var z = 2;
+        var gameWidth = config('level').widthInTiles * (config('tileSize') + config('padding'));
+        var gameHeight = config('level').heightInTiles * (config('tileSize') + config('padding'));
 
-        Crafty.e('Button, TitleScreen').setCallBack(function () { })
-                          .size(config('buttonWidth'), config('buttonHeight'))
-                          .text('Tutorial')
-                          .move(Game.view.width / 2, (Game.view.height / 2) + config('buttonHeight') + config('padding'));
+        Crafty.e('Actor, TitleScreen')
+              .size(gameWidth, gameHeight)
+              .color('black')
+              .z = z;
+
+        Crafty.e('Button, TitleScreen')
+              .setCallBack(Game.preStart)
+              .size(config('buttonWidth'), config('buttonHeight'))
+              .text('Start game')
+              .move(Game.view.width / 2, Game.view.height / 2)
+              .z = z;
+
+        Crafty.e('Button, TitleScreen')
+              .setCallBack(function () { })
+              .size(config('buttonWidth'), config('buttonHeight'))
+              .text('Tutorial')
+              .move(Game.view.width / 2, (Game.view.height / 2) + config('buttonHeight') + config('padding'))
+              .z = z;
     },
 
     start: function () {
