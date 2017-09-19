@@ -16,6 +16,11 @@ Game = {
                           .size(config('buttonWidth'), config('buttonHeight'))
                           .text('Start game')
                           .move(Game.view.width / 2, Game.view.height / 2);
+
+        Crafty.e('Button').setCallBack(function () { })
+                          .size(config('buttonWidth'), config('buttonHeight'))
+                          .text('Tutorial')
+                          .move(Game.view.width / 2, (Game.view.height / 2) + config('buttonHeight') + config('padding'));
     },
 
     start: function () {
