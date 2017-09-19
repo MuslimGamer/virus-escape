@@ -7,6 +7,17 @@ Game = {
 
     levelNumber: 1,
 
+    titleScreen: function () {
+        // Game world is whatever fits on-screen
+        Crafty.init(Game.view.width, Game.view.height);
+        Crafty.background('black');
+
+        Crafty.e('Button').setCallBack(Game.preStart)
+                          .size(config('buttonWidth'), config('buttonHeight'))
+                          .text('Start game')
+                          .move(Game.view.width / 2, Game.view.height / 2);
+    },
+
     start: function () {
 
         function isInArray(array, x, y) {
@@ -30,10 +41,6 @@ Game = {
             }
             }
         }
-
-        // Game world is whatever fits on-screen
-        Crafty.init(Game.view.width, Game.view.height);
-        Crafty.background('black');
         
         map.init(config("level").widthInTiles, config("level").heightInTiles);
         Crafty.e("Level").loadMap(map);
@@ -167,7 +174,8 @@ Game = {
 
     },
 
-    preStart: function() {
+    preStart: function () {
+        Game.cleanUp();
         map.newSeed();
         Game.start();
     },
@@ -196,4 +204,4 @@ Game = {
     }
 };
 
-window.addEventListener('load', Game.preStart);
+window.addEventListener('load', Game.titleScreen);

@@ -1,11 +1,11 @@
 // Level: the thing you see on the screen. Uses a map for data.
 Crafty.c('Level', {
     init: function() {
+        var paddedWidth = config("tileSize") + config("padding");
+        var paddedHeight = config("tileSize") + config("padding");
         this.requires("Actor")
             .color("#000088")
             .size(config("level").widthInTiles * paddedWidth, config("level").heightInTiles * paddedHeight);
-        var paddedWidth = config("tileSize") + config("padding");
-        var paddedHeight = config("tileSize") + config("padding");
 
         for (var key in config('allowTileScanning')) {
             var value = config('allowTileScanning')[key];
