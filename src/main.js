@@ -12,12 +12,12 @@ Game = {
         Crafty.init(Game.view.width, Game.view.height);
         Crafty.background('black');
 
-        Crafty.e('Button').setCallBack(Game.preStart)
+        Crafty.e('Button, TitleScreen').setCallBack(Game.preStart)
                           .size(config('buttonWidth'), config('buttonHeight'))
                           .text('Start game')
                           .move(Game.view.width / 2, Game.view.height / 2);
 
-        Crafty.e('Button').setCallBack(function () { })
+        Crafty.e('Button, TitleScreen').setCallBack(function () { })
                           .size(config('buttonWidth'), config('buttonHeight'))
                           .text('Tutorial')
                           .move(Game.view.width / 2, (Game.view.height / 2) + config('buttonHeight') + config('padding'));
@@ -182,7 +182,7 @@ Game = {
     },
 
     preStart: function () {
-        Game.cleanUp();
+        // Game.cleanUp();
         map.newSeed();
         Game.start();
     },
