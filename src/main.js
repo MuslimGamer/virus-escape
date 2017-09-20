@@ -12,6 +12,11 @@ Game = {
         Crafty.init(Game.view.width, Game.view.height);
         Crafty.background('black');
 
+        Crafty.audio.add('death', 'resources/sounds/death.wav');
+        Crafty.audio.add('win', 'resources/sounds/levelComplete.wav');
+        Crafty.audio.add('switchActivate', 'resources/sounds/lock.wav');
+        Crafty.audio.add('hurt', 'resources/sounds/hurt.wav');
+
         var z = 2;
         var gameWidth = config('level').widthInTiles * (config('tileSize') + config('padding'));
         var gameHeight = config('level').heightInTiles * (config('tileSize') + config('padding'));
@@ -200,7 +205,8 @@ Game = {
         Game.start();
     },
 
-    completeLevel: function() {
+    completeLevel: function () {
+        Crafty.audio.play('win');
         console.log('Level ' + Game.levelNumber.toString() + ' complete! ' +
                     'Starting level ' + (Game.levelNumber + 1).toString() + '.');
         Game.levelNumber += 1;
@@ -208,7 +214,8 @@ Game = {
         this.start();
     },
 
-    loseLevel: function() {
+    loseLevel: function () {
+        Crafty.audio.play('death');
         console.log('You died at level ' + Game.levelNumber.toString() + "!");
         Game.levelNumber = 1;
         this.cleanUp();

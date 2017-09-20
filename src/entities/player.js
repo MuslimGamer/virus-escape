@@ -10,9 +10,10 @@ Crafty.c('Player', {
         this.health = config('playerHealth');
     },
     
-    reduceHealth: function(damage) {
+    reduceHealth: function (damage) {
         this.health -= damage;
         this.healthCounter.setHealth(this.health);
+        Crafty.audio.play('hurt');
         if (this.health <= 0) {
             Game.loseLevel();
             return;
@@ -27,6 +28,7 @@ Crafty.c('Player', {
             return;
         } else if (tileType == 'Switch' && newTile.isOn == true) { 
             newTile.activate();
+            Crafty.audio.play('switchActivate');
         } else if (newTile.entity == 'AntiVirus') {
             if (config('eatableAntiViruses')) {
                 newTile.destroyEntity();

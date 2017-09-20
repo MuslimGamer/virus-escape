@@ -8,11 +8,9 @@
     callBack: function () {},
 
     buttonClick: function () {
-        var allTitleEntities = Crafty('TitleScreen');
-        for (i = 0; i < allTitleEntities.length; i++) {
-            var entity = Crafty(allTitleEntities[i]);
-            entity.tween({ alpha: 0.0 }, 500);
-        }
+        Crafty('TitleScreen').each(function () {
+            this.tween({ alpha: 0.0 }, 500);
+        });
         this.after(1, this.cleanTitle);
         this.callBack();
 
