@@ -7,6 +7,35 @@ Game = {
 
     levelNumber: 1,
 
+    titleScreen: function () {
+        // Game world is whatever fits on-screen
+        Crafty.init(Game.view.width, Game.view.height);
+        Crafty.background('black');
+
+        var z = 2;
+        var gameWidth = config('level').widthInTiles * (config('tileSize') + config('padding'));
+        var gameHeight = config('level').heightInTiles * (config('tileSize') + config('padding'));
+
+        Crafty.e('Actor, TitleScreen')
+              .size(gameWidth, gameHeight)
+              .color('black')
+              .z = z;
+
+        Crafty.e('TitleScreenButton, TitleScreen')
+              .setCallBack(Game.preStart)
+              .size(config('buttonWidth'), config('buttonHeight'))
+              .text('Start game')
+              .move(Game.view.width / 2, Game.view.height / 2)
+              .z = z;
+
+        Crafty.e('TitleScreenButton, TitleScreen')
+        //    .setCallBack(Game.tutorial)
+              .size(config('buttonWidth'), config('buttonHeight'))
+              .text('Tutorial')
+              .move(Game.view.width / 2, (Game.view.height / 2) + config('buttonHeight') + config('padding'))
+              .z = z;
+    },
+
     start: function () {
 
         function isInArray(array, x, y) {
@@ -30,10 +59,6 @@ Game = {
             }
             }
         }
-
-        // Game world is whatever fits on-screen
-        Crafty.init(Game.view.width, Game.view.height);
-        Crafty.background('black');
         
         map.init(config("level").widthInTiles, config("level").heightInTiles);
         Crafty.e("Level").loadMap(map);
@@ -169,7 +194,8 @@ Game = {
 
     },
 
-    preStart: function() {
+    preStart: function () {
+        // Game.cleanUp();
         map.newSeed();
         Game.start();
     },
@@ -198,4 +224,4 @@ Game = {
     }
 };
 
-window.addEventListener('load', Game.preStart);
+window.addEventListener('load', Game.titleScreen);

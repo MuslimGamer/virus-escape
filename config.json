@@ -9,13 +9,15 @@ externs = {
   },
   "tileSize": 32, // tiles are 32x32px
   "padding": 4,
+  "buttonHeight": 32,
+  "buttonWidth": 64,
 
   // [General]
 
   "timerSeconds": 0, // set to 0 to disable
   "spaceToPassTick": true,
 
-  "probabilityOfSpawningTile": 0.20,
+  "probabilityOfSpawningTile": 0.15,
   "incrementProbabilityPerLevel": 0.10,
   "maxProbability": 0.70,
 
