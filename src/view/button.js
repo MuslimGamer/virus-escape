@@ -1,9 +1,11 @@
-﻿Crafty.c('Button', {
+﻿Crafty.c('TitleScreenButton', {
     init: function () {
         this.requires('Actor, Mouse, Text2')
             .color('blue')
             .bind('MouseUp', this.buttonClick);
     },
+
+    callBack: function () {},
 
     buttonClick: function () {
         var allTitleEntities = Crafty('TitleScreen');
