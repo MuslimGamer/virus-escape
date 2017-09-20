@@ -26,18 +26,11 @@ Game = {
               .color('black')
               .z = z;
 
-        Crafty.e('TitleScreenButton, TitleScreen')
+        Crafty.e('NewGameButton, TitleScreen')
               .setCallBack(Game.preStart)
               .size(config('buttonWidth'), config('buttonHeight'))
               .text('Start game')
               .move(Game.view.width / 2, Game.view.height / 2)
-              .z = z;
-
-        Crafty.e('TitleScreenButton, TitleScreen')
-        //    .setCallBack(Game.tutorial)
-              .size(config('buttonWidth'), config('buttonHeight'))
-              .text('Tutorial')
-              .move(Game.view.width / 2, (Game.view.height / 2) + config('buttonHeight') + config('padding'))
               .z = z;
     },
 
