@@ -12,10 +12,19 @@ Game = {
         Crafty.init(Game.view.width, Game.view.height);
         Crafty.background('black');
 
-        Crafty.audio.add('death', 'resources/sounds/death.wav');
-        Crafty.audio.add('win', 'resources/sounds/levelComplete.wav');
-        Crafty.audio.add('switchActivate', 'resources/sounds/lock.wav');
-        Crafty.audio.add('hurt', 'resources/sounds/hurt.wav');
+        // set resources folders
+        Crafty.paths({ audio: 'resources/sounds/' });
+
+        Crafty.load({
+            "audio": {
+                'death': 'death.wav',
+                'win': 'levelComplete.wav',
+                'switchActivate': 'lock.wav',
+                'hurt': 'hurt.wav'
+            }
+        }, function () {
+            Crafty.log('loaded');
+        });
 
         var z = 2;
         var gameWidth = config('level').widthInTiles * (config('tileSize') + config('padding'));
