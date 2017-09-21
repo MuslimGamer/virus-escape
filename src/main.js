@@ -14,6 +14,11 @@ Game = {
 
         // set resources folders
         Crafty.paths({ audio: 'resources/sounds/' });
+        var loadingPercent = Crafty.e('Text2');
+
+        loadingPercent.move(Game.view.width / 2, Game.view.height / 2)
+                      .textColor('white')
+                      .text('Loading... 0%');
 
         Crafty.load({
             "audio": {
@@ -23,24 +28,26 @@ Game = {
                 'hurt': 'hurt.wav'
             }
         }, function () {
-            Crafty.log('loaded');
+            loadingPercent.die();
+
+            var z = 2;
+            var gameWidth = config('level').widthInTiles * (config('tileSize') + config('padding'));
+            var gameHeight = config('level').heightInTiles * (config('tileSize') + config('padding'));
+
+            Crafty.e('Actor, TitleScreen')
+                  .size(gameWidth, gameHeight)
+                  .color('black')
+                  .z = z;
+
+            Crafty.e('NewGameButton, TitleScreen')
+                  .setCallBack(Game.preStart)
+                  .size(config('buttonWidth'), config('buttonHeight'))
+                  .text('Start game')
+                  .move(Game.view.width / 2, Game.view.height / 2)
+                  .z = z;;
+        }, function (e) {
+            loadingPercent.text("Loading... " + e.percent + "%")
         });
-
-        var z = 2;
-        var gameWidth = config('level').widthInTiles * (config('tileSize') + config('padding'));
-        var gameHeight = config('level').heightInTiles * (config('tileSize') + config('padding'));
-
-        Crafty.e('Actor, TitleScreen')
-              .size(gameWidth, gameHeight)
-              .color('black')
-              .z = z;
-
-        Crafty.e('NewGameButton, TitleScreen')
-              .setCallBack(Game.preStart)
-              .size(config('buttonWidth'), config('buttonHeight'))
-              .text('Start game')
-              .move(Game.view.width / 2, Game.view.height / 2)
-              .z = z;
     },
 
     start: function () {
