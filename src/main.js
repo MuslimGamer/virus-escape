@@ -12,28 +12,42 @@ Game = {
         Crafty.init(Game.view.width, Game.view.height);
         Crafty.background('black');
 
-        var z = 2;
-        var gameWidth = config('level').widthInTiles * (config('tileSize') + config('padding'));
-        var gameHeight = config('level').heightInTiles * (config('tileSize') + config('padding'));
+        // set resources folders
+        Crafty.paths({ audio: 'resources/sounds/' });
+        var loadingPercent = Crafty.e('Text2');
 
-        Crafty.e('Actor, TitleScreen')
-              .size(gameWidth, gameHeight)
-              .color('black')
-              .z = z;
+        loadingPercent.move(Game.view.width / 2, Game.view.height / 2)
+                      .textColor('white')
+                      .text('Loading... 0%');
 
-        Crafty.e('TitleScreenButton, TitleScreen')
-              .setCallBack(Game.preStart)
-              .size(config('buttonWidth'), config('buttonHeight'))
-              .text('Start game')
-              .move(Game.view.width / 2, Game.view.height / 2)
-              .z = z;
+        Crafty.load({
+            "audio": {
+                'death': 'death.wav',
+                'win': 'levelComplete.wav',
+                'switchActivate': 'lock.wav',
+                'hurt': 'hurt.wav'
+            }
+        }, function () {
+            loadingPercent.die();
 
-        Crafty.e('TitleScreenButton, TitleScreen')
-        //    .setCallBack(Game.tutorial)
-              .size(config('buttonWidth'), config('buttonHeight'))
-              .text('Tutorial')
-              .move(Game.view.width / 2, (Game.view.height / 2) + config('buttonHeight') + config('padding'))
-              .z = z;
+            var z = 2;
+            var gameWidth = config('level').widthInTiles * (config('tileSize') + config('padding'));
+            var gameHeight = config('level').heightInTiles * (config('tileSize') + config('padding'));
+
+            Crafty.e('Actor, TitleScreen')
+                  .size(gameWidth, gameHeight)
+                  .color('black')
+                  .z = z;
+
+            Crafty.e('NewGameButton, TitleScreen')
+                  .setCallBack(Game.preStart)
+                  .size(config('buttonWidth'), config('buttonHeight'))
+                  .text('Start game')
+                  .move(Game.view.width / 2, Game.view.height / 2)
+                  .z = z;;
+        }, function (e) {
+            loadingPercent.text("Loading... " + e.percent + "%")
+        });
     },
 
     start: function () {
@@ -200,7 +214,8 @@ Game = {
         Game.start();
     },
 
-    completeLevel: function() {
+    completeLevel: function () {
+        Crafty.audio.play('win');
         console.log('Level ' + Game.levelNumber.toString() + ' complete! ' +
                     'Starting level ' + (Game.levelNumber + 1).toString() + '.');
         Game.levelNumber += 1;
@@ -208,7 +223,8 @@ Game = {
         this.start();
     },
 
-    loseLevel: function() {
+    loseLevel: function () {
+        Crafty.audio.play('death');
         console.log('You died at level ' + Game.levelNumber.toString() + "!");
         Game.levelNumber = 1;
         this.cleanUp();
