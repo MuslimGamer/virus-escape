@@ -44,7 +44,7 @@ Game = {
                   .size(config('buttonWidth'), config('buttonHeight'))
                   .text('Start game')
                   .move(Game.view.width / 2, Game.view.height / 2)
-                  .z = z;;
+                  .z = z;
         }, function (e) {
             loadingPercent.text("Loading... " + e.percent + "%")
         });
