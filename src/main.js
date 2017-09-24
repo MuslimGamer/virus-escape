@@ -31,23 +31,54 @@ Game = {
             loadingPercent.die();
 
             var z = 2;
-            var gameWidth = config('level').widthInTiles * (config('tileSize') + config('padding'));
-            var gameHeight = config('level').heightInTiles * (config('tileSize') + config('padding'));
 
             Crafty.e('Actor, TitleScreen')
-                  .size(gameWidth, gameHeight)
+                  .size(Game.view.width, Game.view.height)
                   .color('black')
                   .z = z;
 
-            Crafty.e('NewGameButton, TitleScreen')
-                  .setCallBack(Game.preStart)
+            function newGameCallBack() {
+                Crafty('TitleScreen').each(function () {
+                    this.tween({ alpha: 0.0 }, 500);
+                });
+                Game.preStart();
+                this.after(1, function () {
+                    Crafty('TitleScreen').each(function () {
+                        this.die();
+                    });
+                });
+            }
+
+            function tutorialCallBack() {
+                Crafty('TitleScreen').each(function () {
+                    this.tween({ alpha: 0.0 }, 500);
+                });
+                Game.tutorial();
+            }
+
+            Crafty.e('Button, TitleScreen')
+                  .setCallBack(newGameCallBack)
                   .size(config('buttonWidth'), config('buttonHeight'))
                   .text('Start game')
                   .move(Game.view.width / 2, Game.view.height / 2)
-                  .z = z;;
+                  .z = z;
+
+            Crafty.e('Button, TitleScreen')
+                  .setCallBack(tutorialCallBack)
+                  .size(config('buttonWidth'), config('buttonHeight'))
+                  .text('Tutorial')
+                  .move(Game.view.width / 2, Game.view.height / 2 + config('buttonHeight') + config('padding'))
+                  .z = z;
         }, function (e) {
-            loadingPercent.text("Loading... " + e.percent + "%")
+            loadingPercent.text("Loading... " + e.percent + "%");
         });
+    },
+
+    tutorial: function () {
+        Crafty.e('Actor, Tutorial')
+              .move(Game.view.width / 16, Game.view.height / 16)
+              .color('grey')
+              .size(Game.view.width / 1.2, Game.view.height / 1.2);
     },
 
     start: function () {
@@ -98,7 +129,7 @@ Game = {
         var playerEntity = Crafty.e('Player').moveTo(stopTile);
         map.playerTile = playerEntity.tile;
 
-        var randomTileChance = config('probabilityOfSpawningTile') + (config('incrementProbabilityPerLevel') * Game.levelNumber);
+        var randomTileChance = config('probabilityOfSpawningTile') + config('incrementProbabilityPerLevel') * Game.levelNumber;
         if (randomTileChance > config('maxProbability')) {
             randomTileChance = config('maxProbability');
         }
@@ -109,7 +140,7 @@ Game = {
                 if (!isInArray(path, x, y) && generator.random() < randomTileChance) {
                     var tile = map.getTile(x, y);
                     if (tile.contents == '' && tile.entity == '') {
-                        var choice = generator.choice(['StrongDangerTile', 'WeakDangerTile', 'Empty', 'Empty', 'WallTile', 'WallTile', 'AntiVirus'])
+                        var choice = generator.choice(['StrongDangerTile', 'WeakDangerTile', 'Empty', 'Empty', 'WallTile', 'WallTile', 'AntiVirus']);
                         switch (choice) {
                             case 'StrongDangerTile':
                                 tile.setStrongDangerTile();
@@ -175,7 +206,7 @@ Game = {
             map.getRandomTile()[dangerTile]();
         }
 
-        var switchGateNo = Math.floor((Game.levelNumber/2) + 1) * config('switchGatesPerLevel');
+        var switchGateNo = Math.floor(Game.levelNumber/2 + 1) * config('switchGatesPerLevel');
         for (var i = 0; i < switchGateNo; i++) {
             var switchGate = map.getRandomTile().setSwitchGate(i);
             map.getRandomTile().setSwitch(switchGate);
@@ -209,7 +240,6 @@ Game = {
     },
 
     preStart: function () {
-        // Game.cleanUp();
         map.newSeed();
         Game.start();
     },
